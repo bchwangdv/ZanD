@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'HakgyoansimPuzzleTTF-Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.container-fluid {
+	background: #5EA152;
+	padding: 1rem;
+	color: white;
+}
+
+.logoContainer {
+	display: flex;
+}
+
+.logo {
+	width: 75px;
+	height: 75px;
+}
+
+.logoText {
+	font-family: 'HakgyoansimPuzzleTTF-Black';
+	font-size: 50px;
+	color: white;
+}
+

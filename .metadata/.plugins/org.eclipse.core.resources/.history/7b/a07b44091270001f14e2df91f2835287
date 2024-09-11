@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+body {
+	height: 1000px;
+	background: rgb(94,161,82);
+	background: linear-gradient(0deg, rgba(94,161,82,1) 0%, rgba(58,125,51,1) 100%);
+}
+
+.halfline {
+	height: 30px;
+	background: #EEEEEE;
+}
+
+#bigLogo {
+	font-family: 'HakgyoansimPuzzleTTF-Black';
+	color: white;
+	text-align: center;
+	font-size: 110px;
+	text-shadow: 3px 3px 10px black;
+	margin-top: 100px;
+}
+
+#phrase {
+	font-family: 'Paperlogy-8ExtraBold';
+	color: white;
+	text-align: center;
+	font-size: 30px;
+	text-shadow: 3px 3px 10px black;
+	margin-bottom:
+}
+
+.searchbarContainer {
+	display: flex;
+	justify-content: center;
+	margin: 100px;
+}
+
+.form-select {
+	width: 70px;
+}
+
+.form-control {
+	width: 400px;
+}
+
+.searchbar {
+	width: 800px;
+	border-radius: 5px;
+	background: white;
+}
+
+.resultContatiner {
+	display: flex;
+	justify-content: center;
+}
+
+#searchResult {
+	border-radius: 10px; 
+	background: white;
+	width: 900px;
+}

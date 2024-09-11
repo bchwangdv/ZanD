@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>THE ZD</title>
+<!-- JQuery 3.7.1-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<!-- navbar -->
+<div th:replace="~{navbar :: navbar}"></div>
+<!-- css -->
+<link type="text/css" href='css/home.css' rel="stylesheet">
+<body>
+<div class="halfline"></div>
+
+<div class="resultContatiner">
+	<div id="searchResult">
+		<div>[[${nickname}]]</div>
+	</div>
+</div>
+
+<script>
+const API_KEY = "test_cae361c9b131e27b911a544f8f7a1b8b30a26678c7d36bb7ae8f2747f4a6fa18efe8d04e6d233bd35cf2fabdeb93fb0d";
+	const resultDiv = $("#searchResult");
+	resultDiv.empty();
+	const characterName = document.getElementById("nameInput").value;
+	const ouidReq = "https://open.api.nexon.com/fconline/v1/id?nickname=" + characterName;
+	const ouidObj = fetch(ouidReq, {
+	    headers:{
+	      "x-nxopen-api-key": API_KEY
+	    }
+	})
+		.then(response => response.json())
+		.then(data => {
+			ouid = data.ouid
+			const ouidInput = document.getElementById("ouidInput");
+			ouidInput.value = ouid;
+			const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=50";
+			const matchIds = fetch(matchReq, {
+				headers:{
+					"x-nxopen-api-key": API_KEY
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					if(data == ""){
+						const resultDiv = $("#searchResult");
+						resultDiv.append("최근 공식경기가 없습니다.");
+					} else {
+						for(const matchDetailId of data) {
+							const matchDetailReq = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + matchDetailId;
+							const matchDetail = fetch(matchDetailReq, {
+								headers:{
+									"x-nxopen-api-key": API_KEY
+								}
+							})
+								.then(response => response.json())
+								.then(data => {
+									console.log(data)
+									
+									const resultDiv = $("#searchResult");
+									const usersOuid = $("#ouidInput").val();
+									
+									var dateResult = document.createElement("div");
+									var matchType = document.createElement("div");
+									var opResult = document.createElement("div");
+									var matchResult = document.createElement("div");
+									resultDiv.append(dateResult);
+									resultDiv.append(matchType);
+									resultDiv.append(opResult);
+									resultDiv.append(matchResult);
+									
+									dateResult.append("날짜 : " + data.matchDate);
+									matchType.append("매치타입 : 공식경기");
+									for(const myData of data.matchInfo) {
+										if(myData.ouid != usersOuid) {
+											opResult.append("상대 : " + myData.nickname);
+										}
+										if(myData.ouid == usersOuid) {
+											matchResult.append("결과 : " + myData.matchDetail.matchResult);
+										}
+									}
+									resultDiv.append("<hr/>");
+									
+								})
+								.catch(error => console.error(error))
+						}
+					}
+				})
+				.catch(error => console.error(error))
+		})
+		.catch(error => console.error(error))
+</script>
+</html>

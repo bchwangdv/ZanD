@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'HakgyoansimPuzzleTTF-Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Paperlogy-8ExtraBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+
+.container-fluid {
+	background: #5EA152;
+	padding: 0rem 1rem;
+	color: #EEEEEE;
+}
+
+.logoContainer {
+	display: flex;
+	align-items: center;
+}
+
+.logo {
+	width: 30px;
+	height: 30px;
+}
+
+.logoText {
+	font-family: 'HakgyoansimPuzzleTTF-Black';
+	font-size: 1rem;
+	color: #323232;
+}
+
+.navbar {
+	display: flex;
+	justify-content: center;
+	color: white;
+}
+
+.navbar span{
+	font-family: 'Paperlogy-8ExtraBold';
+	font-weight: bold;
+	margin: 0rem 4rem;
+	padding: 0.5rem;
+}

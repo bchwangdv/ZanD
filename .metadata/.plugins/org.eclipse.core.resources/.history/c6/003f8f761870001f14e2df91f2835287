@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- JQuery 3.7.1-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<!-- navbar -->
+<div th:replace="~{navbar :: navbar}"></div>
+<!-- css -->
+<link type="text/css" href='css/home.css' rel="stylesheet">
+<body>
+<div class="halfline"></div>
+<div class="searchbarContainer">
+	<div class="searchbar">
+		<form action="searchResult">
+			<div class="input-group">
+				<select class="form-select">
+					<option selected>전체 검색</option>
+					<option value="official1v1">공식 경기 1:1</option>
+					<option value="official2v2">공식 경기 2:2</option>
+					<option value="specialMatch">친선 경기</option>
+				</select>
+				<input id="nameInput" type="text" class="form-control" alt="계정명 입력창">
+				<input id="ouidInput" type="hidden">
+				<button id="searchBtn" class="btn btn-outline-secondary">Shoot!</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="resultContatiner">
+	<div id="searchResult"></div>
+</div>
+</html>
