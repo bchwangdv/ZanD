@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'HakgyoansimPuzzleTTF-Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Paperlogy-8ExtraBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+
+.container-fluid {
+	background: rgba(58,125,51,1);
+	padding: 0rem 1rem;
+}
+
+.logoContainer {
+	display: flex;
+	align-items: center;
+}
+
+.smallLogo {
+	width: 30px;
+	height: 30px;
+}
+
+.logoText a{
+	font-family: 'HakgyoansimPuzzleTTF-Black';
+	font-size: 1rem;
+	color: white;
+	text-shadow: 0.1rem 0.1rem 10px black;
+	text-decoration: none;
+}
+
+/* 전체 navbar 컨테이너에 overflow-x 속성을 추가 */
+.navbar-container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* navbar에 flex-nowrap 추가 */
+.navbar {
+    display: flex;
+    justify-content: flex-start; /* 스크롤이 생기도록 왼쪽 정렬 */
+    width: max-content; /* 콘텐츠에 맞게 너비 조정 */
+    color: white;
+    align-items: center;
+    padding: 10px;
+    text-shadow: 0.1rem 0.1rem 10px black;
+}
+
+/* span 요소를 줄바꿈 방지 */
+.navbar span {
+    flex-shrink: 0;
+}
+
+/* a 태그 스타일 수정 */
+.navbar span a {
+    color: white;
+    font-family: 'Paperlogy-8ExtraBold';
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0rem 4rem;
+    padding: 0.5rem;
+    white-space: nowrap;
+    display: inline-block;
+}

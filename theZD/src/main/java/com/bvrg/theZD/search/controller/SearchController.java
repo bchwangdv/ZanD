@@ -12,6 +12,10 @@ public class SearchController {
 	public String getSearchList(@RequestParam("nickname") String nickname,
 								Model model) {
 		
+		if(nickname == "") {
+			//경고창, redirect
+		}
+		
 		model.addAttribute("nickname", nickname);
 		return "searchResult";
 	}

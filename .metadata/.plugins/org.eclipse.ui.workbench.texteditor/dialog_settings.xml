@@ -6,8 +6,13 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="Button"/>
 		<list key="findhistory">
+			<item value="button"/>
+			<item value="form"/>
+			<item value="fav"/>
+			<item value="ouid"/>
+			<item value="script"/>
 			<item value="align"/>
 		</list>
 		<list key="replacehistory">

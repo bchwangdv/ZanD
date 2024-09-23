@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>THE ZD</title>
+<!-- JQuery 3.7.1-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<!-- navbar -->
+<div th:replace="~{navbar :: navbar}"></div>
+<!-- css -->
+<link type="text/css" href='css/main.css' rel="stylesheet">
+<body>
+<div class="halfline"></div>
+
+<div class="logoContainer">
+	<img id="largeLogo" src="image/largeLogo.png"/>
+</div>
+<div class="searchbarContainer">
+	<div class="searchbar">
+		<form action="searchResult">
+			<div class="search-container">
+			    <select class="form-select">
+					<option selected>전체 검색</option>
+					<option value="official1v1">공식 경기 1:1</option>
+					<option value="official2v2">공식 경기 2:2</option>
+					<option value="specialMatch">친선 경기</option>
+				</select>
+			    <input type="text" class="search-input" placeholder="구단주 명">
+			    <span class="search-icon">🔍</span>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

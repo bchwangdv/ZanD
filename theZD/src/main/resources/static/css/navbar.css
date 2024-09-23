@@ -24,7 +24,7 @@
 	align-items: center;
 }
 
-.logo {
+.smallLogo {
 	width: 30px;
 	height: 30px;
 }
@@ -35,21 +35,35 @@
 	color: white;
 	text-shadow: 0.1rem 0.1rem 10px black;
 	text-decoration: none;
+	white-space: nowrap;
+}
+
+.navbar-container {
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .navbar {
-	display: flex;
-	justify-content: center;
-	color: white;
-	text-shadow: 0.1rem 0.1rem 10px black;
+    display: flex;
+    justify-content: flex-start;
+    width: max-content;
+    color: white;
+    align-items: center;
+    padding: 10px;
+    text-shadow: 0.1rem 0.1rem 10px black;
 }
 
-.navbar span a{
-	color: white;
-	font-family: 'Paperlogy-8ExtraBold';
-	font-weight: bold;
-	text-decoration: none;
-	margin: 0rem 4rem;
-	padding: 0.5rem;
-	
+.navbar span {
+    flex-shrink: 0;
+}
+
+.navbar span a {
+    color: white;
+    font-family: 'Paperlogy-8ExtraBold';
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0rem 4rem;
+    padding: 0.5rem;
+    white-space: nowrap;
+    display: inline-block;
 }
