@@ -26,11 +26,26 @@ body {
 	margin: 20px;
 	padding: 20px;
 	font-size: 20px;
-	border-radius: 10px;
+	border-radius: 10px;		
 	background: #EEEEEE;
 }
 
-.resultContatiner {
+.resultContainer {
 	display: flex;
 	justify-content: center;
+}
+
+.namecardContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.divisionImg {
+	width: 40px;
+	height: 40px;
+}
+
+
+#division {
+	font-size: 16px;
 }
