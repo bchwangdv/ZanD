@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>THE ZD</title>
+<title>The ZD</title>
 <!-- JQuery 3.7.1-->
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
@@ -12,11 +12,14 @@
 <link type="text/css" href='css/searchResult.css' rel="stylesheet">
 <body>
 <div class="halfline"></div>
-<div class="contaioner">
+<div class="container">
 	<div class="namecardContainer">
 		<div class="namecard">
 			<div id="nickname">[[${nickname}]]</div>
-			<div id="division"></div>
+			<div id="divisionDiv">
+				<div class="division" id="officialDivision"></div>
+				<div class="division" id="managerModeDivision"></div>
+			</div>
 		</div>
 		<!-- 여백 -->
 		<div style="width: 500px"></div>
@@ -31,6 +34,7 @@ const API_KEY = "test_cae361c9b131e27b911a544f8f7a1b8b30a26678c7d36bb7ae8f2747f4
 const resultDiv = $("#searchResult");
 
 const nickname = [[${nickname}]]
+const conditionNo = [[${conditionNo}]]
 const ouidReq = "https://open.api.nexon.com/fconline/v1/id?nickname=" + nickname;
 const ouidObj = fetch(ouidReq, {
     headers:{
@@ -42,7 +46,8 @@ const ouidObj = fetch(ouidReq, {
 		const ouidDiv = document.getElementById("ouidDiv");
 		const ouid = data.ouid
 		ouidDiv.value = ouid;
-		const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=";
+		// 가져올 매치 수 = 10
+		const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=" + conditionNo + "&limit=10";
 		const divisionReq = "https://open.api.nexon.com/fconline/v1/user/maxdivision?ouid=" + ouid;
 		
 		fetch(divisionReq, {
@@ -53,11 +58,15 @@ const ouidObj = fetch(ouidReq, {
 		.then(response => response.json())
 	    .then(userDivisions => {
 	    	const officialDivision = document.getElementById("officialDivision");
+	    	const classic1on1Division = document.getElementById("classic1on1Division");
+	    	const managerModeDivision = document.getElementById("managerModeDivision");
 	    	
 	    	for(const userDivision of userDivisions) {
-	    		if(userDivision.matchType == 50) {
-		    		divisionDiv.innerHTML = userDivision.division;
-		    	}
+	    		if (userDivision.matchType == 50) {
+	    			officialDivision.innerHTML = userDivision.division;
+	    		} else if (userDivision.matchType == 52) {
+		    		managerModeDivision.innerHTML = userDivision.division;
+	    		}
 	    	}
 	    	
 	    	const DivisionListReq = "https://open.api.nexon.com/static/fconline/meta/division.json";
@@ -65,11 +74,16 @@ const ouidObj = fetch(ouidReq, {
 	    	.then(response => response.json())
 	    	.then(divisionList => {
 	    		for(const division of divisionList) {
-	    			if(divisionDiv.innerHTML == division.divisionId) {
-	    				divisionDiv.innerHTML = "공식경기 최고티어 : ";
-	    				divisionDiv.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
-	    				divisionDiv.innerHTML += "(" + division.divisionName + ")";
+	    			if(officialDivision.innerHTML == division.divisionId) {
+	    				officialDivision.innerHTML = "공식경기 최고티어 : ";
+	    				officialDivision.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
+	    				officialDivision.innerHTML += "(" + division.divisionName + ")";
+	    			} else if(managerModeDivision.innerHTML == division.divisionId) {
+	    				managerModeDivision.innerHTML = "감독모드 최고티어 : ";
+	    				managerModeDivision.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
+	    				managerModeDivision.innerHTML += "(" + division.divisionName + ")";
 	    			}
+	    			
 	    		}
 			})
 	    })
@@ -134,7 +148,13 @@ const ouidObj = fetch(ouidReq, {
 					matchContainer.appendChild(dateDiv);
 
 	                // 매치 타입 출력
-	                matchTypeDiv.innerHTML = '매치타입 : 1v1 공식경기';
+	                if(data.matchType == 50) {
+	                	matchTypeDiv.innerHTML = '매치타입 : 공식경기';
+	                } else if (data.matchType == 40) {
+	                	matchTypeDiv.innerHTML = '매치타입 : 클래식 1on1';
+	                } else if (data.matchType == 52) {
+	                	matchTypeDiv.innerHTML = '매치타입 : 감독모드';
+	                }
 	                matchContainer.appendChild(matchTypeDiv);
 
 	                // 매치 결과 출력
@@ -149,6 +169,20 @@ const ouidObj = fetch(ouidReq, {
 	                    
 					opResultDiv.innerHTML = '상대 : ' + opInfo.nickname;
 					matchContainer.appendChild(opResultDiv);
+					
+					// 몰수승, 몰수패 Check
+					
+					if(myInfo.shoot.goalTotal == null) {
+						myInfo.shoot.goalTotal = 0;
+						myInfo.shoot.shootOutScore = 0;
+						myInfo.matchDetail.matchResult = "몰수패"
+					}
+					if(opInfo.shoot.goalTotal == null) {
+						opInfo.shoot.goalTotal = 0;
+						opInfo.shoot.shootOutScore = 0;
+						opInfo.matchDetail.matchResult = "몰수승"
+					}
+					
 					matchResultDiv.innerHTML = myInfo.shoot.goalTotal + ' : ' + opInfo.shoot.goalTotal + ' ' + myInfo.matchDetail.matchResult;
 					
 					if(!(myInfo.shoot.shootOutScore == 0 && opInfo.shoot.shootOutScore == 0)){
@@ -158,7 +192,7 @@ const ouidObj = fetch(ouidReq, {
 					matchContainer.appendChild(matchResultDiv);
 					
 					// 승,패에 색 추가
-					if (myInfo.matchDetail.matchResult == '승') {
+					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
 						matchResultDiv.classList.add('text-primary');
 					} else {
 						matchResultDiv.classList.add('text-danger');

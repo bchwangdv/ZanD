@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="console"/>
+		<item key="selection" value="matchReq"/>
 		<list key="findhistory">
+			<item value="matchreq"/>
+			<item value="detailreq"/>
+			<item value="req"/>
 			<item value="console"/>
 			<item value="button"/>
 			<item value="form"/>
