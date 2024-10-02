@@ -18,18 +18,31 @@
 </div>
 <div class="searchbarContainer">
 	<div class="searchbar">
-		<form action="searchResult">
+		<form id="searchForm" action="searchResult">
 			<div class="search-container">
 			    <select name="searchCondition" class="form-select">
 					<option selected value="officialMatch">공식 경기</option>
 					<option value="classic1on1">클래식 1on1</option>
 					<option value="managerMode">감독 모드</option>
 				</select>
-			    <input name="nickname" type="text" class="search-input" placeholder="구단주 명을 입력하세요">
-			    <button class="searchButton btn">🔍</button>
+			    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="구단주 명을 입력하세요">
+			    <button id="searchButton" type="button" class="btn searchButton">🔍</button>
 			</div>
 		</form>
 	</div>
 </div>
 </body>
+<script>
+	const searchButton = document.getElementById("searchButton");
+	
+	searchButton.addEventListener('click', ()=> {
+		const nickname = document.getElementById("nickname").value;
+		if(nickname == null || nickname.trim() == '') {
+			return;
+		} else {
+			const searchForm = document.getElementById("searchForm");
+			searchForm.submit();
+		}
+	});
+</script>
 </html>

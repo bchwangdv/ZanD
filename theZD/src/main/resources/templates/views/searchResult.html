@@ -25,15 +25,31 @@
 		<div style="width: 500px"></div>
 	</div>
 	<input type="hidden" id="ouidDiv"></input>
-	<div class="resultContainer">
-		<div id="searchResult"></div>
+	<div class="tabResultContainer">
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link" th:classappend="${conditionNo eq 50} ? active" th:href="@{/searchResult(searchCondition='officialMatch', nickname=${nickname})}">공식경기</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" th:classappend="${conditionNo eq 40} ? active" th:href="@{/searchResult(searchCondition='classic1on1', nickname=${nickname})}">클래식 1on1</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" th:classappend="${conditionNo eq 52} ? active" th:href="@{/searchResult(searchCondition='managerMode', nickname=${nickname})}">감독모드</a>
+			</li>
+		</ul>
+		<div class="resultContainer">
+			<div id="searchResult"></div>
+		</div>
 	</div>
 </div>
 <script th:inline="javascript">
-const API_KEY = "test_cae361c9b131e27b911a544f8f7a1b8b30a26678c7d36bb7ae8f2747f4a6fa18efe8d04e6d233bd35cf2fabdeb93fb0d";
+const API_KEY = "live_cae361c9b131e27b911a544f8f7a1b8b67203348dc67e50449555d9ad071d788efe8d04e6d233bd35cf2fabdeb93fb0d";
 const resultDiv = $("#searchResult");
-
 const nickname = [[${nickname}]]
+if(nickname.trim() == '' || nickname == null) {
+	alert('비정상적인 접근입니다.');
+	window.location.replace('http://localhost:8080/main');
+}
 const conditionNo = [[${conditionNo}]]
 const ouidReq = "https://open.api.nexon.com/fconline/v1/id?nickname=" + nickname;
 const ouidObj = fetch(ouidReq, {
@@ -49,6 +65,9 @@ const ouidObj = fetch(ouidReq, {
 		// 가져올 매치 수 = 10
 		const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=" + conditionNo + "&limit=10";
 		const divisionReq = "https://open.api.nexon.com/fconline/v1/user/maxdivision?ouid=" + ouid;
+		const officialDivision = document.getElementById("officialDivision");
+    	const classic1on1Division = document.getElementById("classic1on1Division");
+    	const managerModeDivision = document.getElementById("managerModeDivision");
 		
 		fetch(divisionReq, {
 			headers: {
@@ -58,7 +77,6 @@ const ouidObj = fetch(ouidReq, {
 		.then(response => response.json())
 	    .then(userDivisions => {
 	    	const officialDivision = document.getElementById("officialDivision");
-	    	const classic1on1Division = document.getElementById("classic1on1Division");
 	    	const managerModeDivision = document.getElementById("managerModeDivision");
 	    	
 	    	for(const userDivision of userDivisions) {
@@ -78,17 +96,18 @@ const ouidObj = fetch(ouidReq, {
 	    				officialDivision.innerHTML = "공식경기 최고티어 : ";
 	    				officialDivision.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
 	    				officialDivision.innerHTML += "(" + division.divisionName + ")";
-	    			} else if(managerModeDivision.innerHTML == division.divisionId) {
+	    			}
+	    			if(managerModeDivision.innerHTML == division.divisionId) {
 	    				managerModeDivision.innerHTML = "감독모드 최고티어 : ";
 	    				managerModeDivision.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
 	    				managerModeDivision.innerHTML += "(" + division.divisionName + ")";
 	    			}
-	    			
 	    		}
 			})
 	    })
 	    .catch(error => console.error(error));
-	    	
+		divisionReqStatus = true;
+    	
 		fetch(matchReq, {
 	        headers: {
 	            "x-nxopen-api-key": API_KEY
@@ -96,7 +115,6 @@ const ouidObj = fetch(ouidReq, {
 	    })
 	    .then(response => response.json())
 	    .then(matchIds => {
-	    	
 	    	if (matchIds.length == 0) {
 	    		const matchContainer = document.createElement("div");
 	    		// 스타일을 위한 클래스 추가
@@ -105,7 +123,6 @@ const ouidObj = fetch(ouidReq, {
                 resultDiv.append(matchContainer);
             	return;
             }
-	    	
 	        const matchDetailPromises = matchIds.map(matchId => {
 			const matchDetailReq = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + matchId;
 			return fetch(matchDetailReq, {
@@ -114,14 +131,10 @@ const ouidObj = fetch(ouidReq, {
 					}
 				}).then(response => response.json());
 	        });
-	        
 	        Promise.all(matchDetailPromises)
 	        .then(matchDetails => {
-	        	
 	        	matchDetails.sort((a, b) => new Date(b.matchDate) - new Date(a.matchDate));
-	        	
 	            const usersOuid = $("#ouidDiv").val();
-
 	            matchDetails.forEach(data => {
 	            	const matchContainer = document.createElement("div");
 	            	// 스타일을 위한 클래스 추가
@@ -131,7 +144,8 @@ const ouidObj = fetch(ouidReq, {
 	                const matchTypeDiv = document.createElement("div");
 	                const opResultDiv = document.createElement("div");
 	                const matchResultDiv = document.createElement("div");
-					
+	                
+	            	// 날짜 및 시간 처리
 	                const KSTmatchDate = new Date(data.matchDate);
 	                KSTmatchDate.setHours(KSTmatchDate.getHours()+9);
 	                
@@ -194,8 +208,10 @@ const ouidObj = fetch(ouidReq, {
 					// 승,패에 색 추가
 					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
 						matchResultDiv.classList.add('text-primary');
-					} else {
+					} else if (myInfo.matchDetail.matchResult == '패' || myInfo.matchDetail.matchResult == '몰수패'){
 						matchResultDiv.classList.add('text-danger');
+					} else {
+						matchResultDiv.classList.add('text-success');
 					}
 	                
 	                // 결과를 검색 결과 div에 추가

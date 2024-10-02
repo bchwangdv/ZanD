@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>The ZD</title>
+<!-- JQuery 3.7.1-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<!-- navbar -->
+<div th:replace="~{navbar :: navbar}"></div>
+<!-- css -->
+<link type="text/css" href='css/main.css' rel="stylesheet">
+<body>
+<div class="halfline"></div>
+
+<div class="logoContainer">
+	<img id="largeLogo" src="image/largeLogo.png"/>
+</div>
+<div class="searchbarContainer">
+	<div class="searchbar">
+		<form>
+			<div class="search-container">
+			    <select name="searchCondition" class="form-select">
+					<option selected value="officialMatch">공식 경기</option>
+					<option value="classic1on1">클래식 1on1</option>
+					<option value="managerMode">감독 모드</option>
+				</select>
+			    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="구단주 명을 입력하세요">
+			    <button id="searchButton" class="btn searchButton">🔍</button>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+<script>
+	const searchButton = document.getElementById("searchButton");
+	const nickname = document.getElementById("nickname");
+	
+	searchButton.addEventListener('click', ()=> {
+		fetch('searchResult', {
+			method: 'GET',
+		})
+		.then(response => response.json())
+		.then(data => {
+			if(nickname == null || nickname == '') {
+				console.log("빈칸이어요");
+			} else {
+				console.log("검색이어요");
+			}
+		})
+		.catch(error => console.error('Error:', error));
+	});
+</script>
+</html>
