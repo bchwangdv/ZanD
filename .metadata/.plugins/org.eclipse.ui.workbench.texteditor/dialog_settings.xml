@@ -6,8 +6,15 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="matchReq"/>
+		<item key="selection" value="addEv"/>
 		<list key="findhistory">
+			<item value="addev"/>
+			<item value="adD"/>
+			<item value="add"/>
+			<item value="inner"/>
+			<item value="usersOuid"/>
+			<item value="byid"/>
+			<item value="ㅠ"/>
 			<item value="matchreq"/>
 			<item value="detailreq"/>
 			<item value="req"/>
@@ -16,8 +23,6 @@
 			<item value="form"/>
 			<item value="fav"/>
 			<item value="ouid"/>
-			<item value="script"/>
-			<item value="align"/>
 		</list>
 		<list key="replacehistory">
 		</list>

@@ -114,3 +114,7 @@ body {
 .nav-link:focus, .nav-link:hover {
     color: white;
 }
+
+.loadingImg {
+	width: 50px;
+}
