@@ -195,8 +195,6 @@ function loadMatchData(ouid, conditionNo) {
 
                 // 매치 결과 출력
                 // 검색 계정을 앞에 둠
-                // API에서 갑자기 상대 정보가 안뜬다?? ** 수정 필요 **
-                var myInfo = data.matchInfo[0];
                 if(data.matchInfo[0] != undefined && data.matchInfo[1] != undefined) {
                 	if (data.matchInfo[0].ouid == usersOuid) {
     					var myInfo = data.matchInfo[0]

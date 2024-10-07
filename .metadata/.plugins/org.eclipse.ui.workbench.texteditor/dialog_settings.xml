@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="addEv"/>
+		<item key="selection" value="opInfo"/>
 		<list key="findhistory">
+			<item value="opInfo"/>
+			<item value="console"/>
 			<item value="addev"/>
 			<item value="adD"/>
 			<item value="add"/>
@@ -18,11 +20,9 @@
 			<item value="matchreq"/>
 			<item value="detailreq"/>
 			<item value="req"/>
-			<item value="console"/>
 			<item value="button"/>
 			<item value="form"/>
 			<item value="fav"/>
-			<item value="ouid"/>
 		</list>
 		<list key="replacehistory">
 		</list>
