@@ -37,18 +37,21 @@ body {
 }
 
 .match-container {
-	height: 150px;
-	margin: 20px;
-	padding: 20px;
-	width: 900px;
 	font-size: 20px;
-	border-radius: .25rem;		
-	background: #EEEEEE;
+}
+
+.accordion-button {
+	color: black !important;
+	margin: 10px 0px;
+	border-radius: .25rem;
+}
+
+.accordion-collapse {
+	background: white;
+	border-radius: .25rem;
 }
 
 .resultContainer {
-	display: flex;
-	justify-content: center;
 	width: 940px;
 	padding: 20px;
 	margin:auto;

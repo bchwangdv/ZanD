@@ -42,13 +42,13 @@
 				<img class="loadingImg" src='image/loading.gif'>
 				&nbsp;&nbsp;매치정보를 불러오고 있습니다..
 			</div>
-			<div id="searchResult"></div>
 		</div>
 	</div>
 </div>
 <script th:inline="javascript">
 const API_KEY = "live_cae361c9b131e27b911a544f8f7a1b8b67203348dc67e50449555d9ad071d788efe8d04e6d233bd35cf2fabdeb93fb0d";
 const resultDiv = $("#searchResult");
+const resultContainer = $(".resultContainer");
 const nickname = [[${nickname}]]
 
 if(nickname.trim() == '' || nickname == null) {
@@ -128,7 +128,7 @@ function loadDivisionData() {
 }
 
 function loadMatchData(ouid, conditionNo) {
-	resultDiv.empty();
+	resultContainer.empty();
 	const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=" + conditionNo + "&limit=10";
 	fetch(matchReq, {
 		headers: {
@@ -158,14 +158,35 @@ function loadMatchData(ouid, conditionNo) {
         .then(matchDetails => {
         	matchDetails.sort((a, b) => new Date(b.matchDate) - new Date(a.matchDate));
         	const usersOuid = $("#ouidDiv").val();
-            matchDetails.forEach(data => {
+        	
+            matchDetails.forEach((data, index) => {
             	const matchContainer = document.createElement("div");
                 matchContainer.className = "match-container";
+                matchContainer.id = `match-container-${index}`;
 				
+                const accordionDiv = document.createElement("div");
+                const accordionBtn = document.createElement("button");
+                
+                accordionBtn.className = "accordion-button collapsed";
+                accordionBtn.setAttribute("data-bs-toggle", "collapse");
+                accordionBtn.setAttribute("data-bs-target", `#matchDetailContent-${index}`);
+                accordionBtn.setAttribute("aria-expanded", "false");
+                accordionBtn.setAttribute("aria-controls", `matchDetailContent-${index}`);
+                
+                const matchDetailContent = document.createElement("div");
+                matchDetailContent.id = `matchDetailContent-${index}`;
+                matchDetailContent.className = "accordion-collapse collapse";
+                matchDetailContent.innerHTML = "내용";
+                
                 const dateDiv = document.createElement("div");
                 const matchTypeDiv = document.createElement("div");
                 const opResultDiv = document.createElement("div");
                 const matchResultDiv = document.createElement("div");
+                
+                accordionBtn.append(matchContainer);
+                accordionDiv.append(accordionBtn);
+                accordionDiv.append(matchDetailContent);
+                resultContainer.append(accordionDiv);
                 
             	// 날짜 및 시간 처리
                 const KSTmatchDate = new Date(data.matchDate);
@@ -197,8 +218,7 @@ function loadMatchData(ouid, conditionNo) {
                 // 검색 계정을 앞에 둠
                 // API에서 갑자기 상대 정보가 안뜬다?? ** 수정 필요 **
                 		
-                var myInfo = data.matchInfo[0];
-                if(data.matchInfo[0] != undefined && data.matchInfo[1] != undefined) {
+                if(data.matchInfo[1] != undefined) {
                 	if (data.matchInfo[0].ouid == usersOuid) {
     					var myInfo = data.matchInfo[0]
     					var opInfo = data.matchInfo[1]
@@ -228,22 +248,31 @@ function loadMatchData(ouid, conditionNo) {
     				if(!(myInfo.shoot.shootOutScore == 0 && opInfo.shoot.shootOutScore == 0)){
     					matchResultDiv.innerHTML += ' (' + myInfo.shoot.shootOutScore + '-' + opInfo.shoot.shootOutScore + ')';
     				}
+					matchContainer.appendChild(matchResultDiv);
+				
+					// 승,패에 색 추가
+					
+					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
+						accordionBtn.style.background = "#0077FF26"; //승
+					} else if (myInfo.matchDetail.matchResult == '패' || myInfo.matchDetail.matchResult == '몰수패'){
+						accordionBtn.style.background = "#FF000010"; //패
+					} else {
+						accordionBtn.style.background = "#00FF0010"; //무
+					} 
+					
+                } else {
+                	accordionBtn.style.background = "#00000030";
+                	opResultDiv.innerHTML = '상대 : 알수 없음';
+                	matchResultDiv.innerHTML = '매치 불러오기를 실패했습니다.';
+                	opResultDiv.classList.add('text-danger');
+                	matchResultDiv.classList.add('text-danger');
+                	matchContainer.appendChild(opResultDiv);
+                	matchContainer.appendChild(matchResultDiv);
                 }
 				
-				matchContainer.appendChild(matchResultDiv);
-				
-				// 승,패에 색 추가
-				if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
-					matchResultDiv.classList.add('text-primary');
-				} else if (myInfo.matchDetail.matchResult == '패' || myInfo.matchDetail.matchResult == '몰수패'){
-					matchResultDiv.classList.add('text-danger');
-				} else {
-					matchResultDiv.classList.add('text-success');
-				}
-				
                 // 결과를 검색 결과 div에 추가
-                resultDiv.append(matchContainer);
-                //로딩 완료
+                
+                // 로딩 완료
                 $(".loading").css("display","none");
             });
         })

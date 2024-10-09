@@ -6,23 +6,23 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="opInfo"/>
+		<item key="selection" value="accordion-button"/>
 		<list key="findhistory">
+			<item value="accordion-button"/>
+			<item value="Btn"/>
+			<item value="btn"/>
+			<item value="accord"/>
+			<item value="empty"/>
+			<item value="loading"/>
+			<item value="l"/>
+			<item value="resultcon"/>
+			<item value="resultdiv"/>
+			<item value="result"/>
 			<item value="opInfo"/>
 			<item value="console"/>
 			<item value="addev"/>
 			<item value="adD"/>
 			<item value="add"/>
-			<item value="inner"/>
-			<item value="usersOuid"/>
-			<item value="byid"/>
-			<item value="ㅠ"/>
-			<item value="matchreq"/>
-			<item value="detailreq"/>
-			<item value="req"/>
-			<item value="button"/>
-			<item value="form"/>
-			<item value="fav"/>
 		</list>
 		<list key="replacehistory">
 		</list>

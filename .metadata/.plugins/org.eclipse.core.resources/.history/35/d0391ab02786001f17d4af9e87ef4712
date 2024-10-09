@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>The ZD</title>
+<!-- JQuery 3.7.1-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<!-- navbar -->
+<div th:replace="~{navbar :: navbar}"></div>
+<!-- css -->
+<link type="text/css" href='css/searchResult.css' rel="stylesheet">
+<body>
+<div class="halfline"></div>
+<div class="container">
+	<div class="namecardContainer">
+		<div class="namecard">
+			<div id="nickname">[[${nickname}]]</div>
+			<div id="divisionDiv">
+				<div class="division" id="officialDivision"></div>
+				<div class="division" id="managerModeDivision"></div>
+			</div>
+		</div>
+		<!-- 여백 -->
+		<div style="width: 500px"></div>
+	</div>
+	<input type="hidden" id="ouidDiv"></input> 
+	<div class="tabResultContainer">
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<button class="nav-link active" id="officialMatch" value="50" >공식경기</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" id="classic1on1" value="40">클래식 1on1</button>
+			</li>
+			<li class="nav-item">
+				<button class="nav-link" id="managerMode" value="52">감독모드</button>
+			</li>
+		</ul>
+		<div class="resultContainer">
+			<div class="loading">
+				<img class="loadingImg" src='image/loading.gif'>
+				&nbsp;&nbsp;매치정보를 불러오고 있습니다..
+			</div>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+const API_KEY = "live_cae361c9b131e27b911a544f8f7a1b8b67203348dc67e50449555d9ad071d788efe8d04e6d233bd35cf2fabdeb93fb0d";
+const resultDiv = $("#searchResult");
+const resultContainer = $(".resultContainer");
+const nickname = [[${nickname}]]
+
+if(nickname.trim() == '' || nickname == null) {
+	alert('닉네임을 입력해야합니다.');
+	window.location.replace('http://localhost:8080/main');
+}
+
+const ouidReq = "https://open.api.nexon.com/fconline/v1/id?nickname=" + nickname;
+let conditionNo = [[${conditionNo}]];
+
+fetch(ouidReq, {
+	headers:{
+		"x-nxopen-api-key": API_KEY
+	}
+})
+.then(response => response.json())
+.then(data => {
+	ouid = data.ouid
+	$("#ouidDiv").val(ouid);
+	loadDivisionData(ouid);
+	
+	const tabs = document.getElementsByClassName('nav-link')
+	for(const tab of tabs){
+		tab.addEventListener('click', function() {
+			for(const tab of tabs){
+				tab.classList.remove('active');
+			}
+			this.classList.add('active');
+			$(".loading").css("display","block");
+			loadMatchData(ouid, this.value);
+		});
+	}
+	
+	loadMatchData(ouid, conditionNo);
+})
+.catch(error => console.error(error));
+
+function loadDivisionData() {
+	const divisionReq = "https://open.api.nexon.com/fconline/v1/user/maxdivision?ouid=" + ouid;
+	fetch(divisionReq, {
+		headers: {
+            "x-nxopen-api-key": API_KEY
+        }
+	})
+	.then(response => response.json())
+    .then(userDivisions => {
+    	const officialDivision = document.getElementById("officialDivision");
+    	const managerModeDivision = document.getElementById("managerModeDivision");
+    	
+    	for(const userDivision of userDivisions) {
+    		if (userDivision.matchType == 50) {
+    			officialDivision.innerHTML = userDivision.division;
+    		} else if (userDivision.matchType == 52) {
+	    		managerModeDivision.innerHTML = userDivision.division;
+    		}
+    	}
+    	
+    	const DivisionListReq = "https://open.api.nexon.com/static/fconline/meta/division.json";
+    	fetch(DivisionListReq, {})
+    	.then(response => response.json())
+    	.then(divisionList => {
+    		for(const division of divisionList) {
+    			if(officialDivision.innerHTML == division.divisionId) {
+    				officialDivision.innerHTML = "공식경기 최고티어 : ";
+    				officialDivision.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
+    				officialDivision.innerHTML += "(" + division.divisionName + ")";
+    			}
+    			if(managerModeDivision.innerHTML == division.divisionId) {
+    				managerModeDivision.innerHTML = "감독모드 최고티어 : ";
+    				managerModeDivision.innerHTML += '<img class="divisionImg" src="https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank' + divisionList.findIndex(i => i == division) + '_m.png">'
+    				managerModeDivision.innerHTML += "(" + division.divisionName + ")";
+    			}
+    		}
+		})
+    })
+	.catch(error => console.error(error));
+}
+
+function loadMatchData(ouid, conditionNo) {
+	resultContainer.empty();
+	const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=" + conditionNo + "&limit=10";
+	fetch(matchReq, {
+		headers: {
+            "x-nxopen-api-key": API_KEY
+        }
+	})
+	.then(response => response.json())
+    .then(matchIds => {
+    	if (matchIds.length == 0) {
+    		const matchContainer = document.createElement("div");
+    		// 스타일을 위한 클래스 추가
+            matchContainer.className = "noResult";
+            matchContainer.innerText = '최근 경기 결과가 없습니다.'
+            resultDiv.append(matchContainer);
+        	return;
+        }
+        const matchDetailPromises = matchIds.map(matchId => {
+		const matchDetailReq = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + matchId;
+		return fetch(matchDetailReq, {
+				headers: {
+					"x-nxopen-api-key": API_KEY
+				}
+			}).then(response => response.json());
+        });
+        
+        Promise.all(matchDetailPromises)
+        .then(matchDetails => {
+        	matchDetails.sort((a, b) => new Date(b.matchDate) - new Date(a.matchDate));
+        	const usersOuid = $("#ouidDiv").val();
+            matchDetails.forEach(data => {
+            	const matchContainer = document.createElement("div");
+                matchContainer.className = "match-container";
+				
+                const accordionDiv = document.createElement("div");
+                const accordionBtn = document.createElement("button");
+                
+                accordionBtn.className = "accordion-button";
+                accordionBtn.setAttribute("data-bs-toggle", "collapse");
+                accordionBtn.setAttribute("data-bs-target", "#matchDetailContent");
+                accordionBtn.setAttribute("aria-expanded", "true");
+                accordionBtn.setAttribute("aria-controls", "#matchDetailContent");
+                
+                const matchDetailContent = document.createElement("div");
+                matchDetailContent.id = "matchDetailContent";
+                matchDetailContent.className = "accordion-collapse collapse show";
+                matchDetailContent.innerHTML = "내용";
+                matchContainer.appendChild(matchDetailContent);
+                
+                
+                const dateDiv = document.createElement("div");
+                const matchTypeDiv = document.createElement("div");
+                const opResultDiv = document.createElement("div");
+                const matchResultDiv = document.createElement("div");
+                
+            	// 날짜 및 시간 처리
+                const KSTmatchDate = new Date(data.matchDate);
+                KSTmatchDate.setHours(KSTmatchDate.getHours()+9);
+                
+				const matchYear = KSTmatchDate.getFullYear();
+				const matchMonth = String(KSTmatchDate.getMonth() + 1).padStart(2, '0');
+				const matchDay = String(KSTmatchDate.getDate()).padStart(2, '0');
+				const matchHours = String(KSTmatchDate.getHours()).padStart(2, '0');
+				const matchMinutes = String(KSTmatchDate.getMinutes()).padStart(2, '0');
+				const matchTime = matchHours + ':' + matchMinutes;
+                const matchDate = matchYear + '년 ' + matchMonth + '월 ' + matchDay + '일 ' + matchTime
+                
+            	// 날짜 및 시간 출력
+				dateDiv.innerHTML = matchDate;
+				matchContainer.appendChild(dateDiv);
+
+                // 매치 타입 출력
+                if(data.matchType == 50) {
+                	matchTypeDiv.innerHTML = '매치타입 : 공식경기';
+                } else if (data.matchType == 40) {
+                	matchTypeDiv.innerHTML = '매치타입 : 클래식 1on1';
+                } else if (data.matchType == 52) {
+                	matchTypeDiv.innerHTML = '매치타입 : 감독모드';
+                }
+                matchContainer.appendChild(matchTypeDiv);
+
+                // 매치 결과 출력
+                // 검색 계정을 앞에 둠
+                // API에서 갑자기 상대 정보가 안뜬다?? ** 수정 필요 **
+                		
+                if(data.matchInfo[1] != undefined) {
+                	if (data.matchInfo[0].ouid == usersOuid) {
+    					var myInfo = data.matchInfo[0]
+    					var opInfo = data.matchInfo[1]
+    				} else {
+    					var myInfo = data.matchInfo[1]
+    					var opInfo = data.matchInfo[0]
+    				}
+    				
+    				opResultDiv.innerHTML = '상대 : ' + opInfo.nickname;
+    				matchContainer.appendChild(opResultDiv);
+    				
+    				// 몰수승, 몰수패 Check
+    				
+    				if(myInfo.shoot.goalTotal == null) {
+    					myInfo.shoot.goalTotal = 0;
+    					myInfo.shoot.shootOutScore = 0;
+    					myInfo.matchDetail.matchResult = "몰수패"
+    				}
+    				if(opInfo.shoot.goalTotal == null) {
+    					opInfo.shoot.goalTotal = 0;
+    					opInfo.shoot.shootOutScore = 0;
+    					opInfo.matchDetail.matchResult = "몰수승"
+    				}
+    				
+    				matchResultDiv.innerHTML = myInfo.shoot.goalTotal + ' : ' + opInfo.shoot.goalTotal + ' ' + myInfo.matchDetail.matchResult;
+    				
+    				if(!(myInfo.shoot.shootOutScore == 0 && opInfo.shoot.shootOutScore == 0)){
+    					matchResultDiv.innerHTML += ' (' + myInfo.shoot.shootOutScore + '-' + opInfo.shoot.shootOutScore + ')';
+    				}
+					matchContainer.appendChild(matchResultDiv);
+				
+					// 승,패에 색 추가
+					
+					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
+						accordionBtn.style.background = "#0077FF26";
+					} else if (myInfo.matchDetail.matchResult == '패' || myInfo.matchDetail.matchResult == '몰수패'){
+						accordionBtn.style.background = "#FF000010";
+					} else {
+						accordionBtn.style.background = "#00FF0010";
+					} 
+					
+                } else {
+                	accordionBtn.style.background = "#00000030";
+                	opResultDiv.innerHTML = '상대 : 알수 없음';
+                	matchResultDiv.innerHTML = '매치 불러오기를 실패했습니다.';
+                	opResultDiv.classList.add('text-danger');
+                	matchResultDiv.classList.add('text-danger');
+                	matchContainer.appendChild(opResultDiv);
+                	matchContainer.appendChild(matchResultDiv);
+                }
+				
+                // 결과를 검색 결과 div에 추가
+                accordionBtn.appendChild(matchContainer);
+                resultContainer.append(accordionBtn);
+                //로딩 완료
+                $(".loading").css("display","none");
+            });
+        })
+		.catch(error => console.error(error))
+	})
+	.catch(error => console.error(error))
+}
+
+</script>
+</body>
+</html>
