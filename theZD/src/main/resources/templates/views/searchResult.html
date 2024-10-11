@@ -37,10 +37,12 @@
 				<button class="nav-link" id="managerMode" value="52">감독모드</button>
 			</li>
 		</ul>
-		<div class="resultContainer">
+		<div class="loadingResultContainer">
 			<div class="loading">
-				<img class="loadingImg" src='image/loading.gif'>
-				&nbsp;&nbsp;매치정보를 불러오고 있습니다..
+				<img class="loadingImg m-3" src='image/loading.gif'>
+				<h6>매치정보를 불러오고 있습니다..</h6>
+			</div>
+			<div class="resultContainer">
 			</div>
 		</div>
 	</div>
@@ -176,7 +178,6 @@ function loadMatchData(ouid, conditionNo) {
                 const matchDetailContent = document.createElement("div");
                 matchDetailContent.id = `matchDetailContent-${index}`;
                 matchDetailContent.className = "accordion-collapse collapse";
-                matchDetailContent.innerHTML = "내용";
                 
                 const dateDiv = document.createElement("div");
                 const matchTypeDiv = document.createElement("div");
@@ -270,7 +271,8 @@ function loadMatchData(ouid, conditionNo) {
                 	matchContainer.appendChild(matchResultDiv);
                 }
 				
-                // 결과를 검색 결과 div에 추가
+                // 클릭할 때만 불러오게 해야되는데..
+                accordionBtn.addEventListener('click', loadMatchDetail(index, matchDetailContent, myInfo, opInfo));
                 
                 // 로딩 완료
                 $(".loading").css("display","none");
@@ -279,6 +281,26 @@ function loadMatchData(ouid, conditionNo) {
 		.catch(error => console.error(error))
 	})
 	.catch(error => console.error(error))
+}
+
+function loadMatchDetail(index, matchDetailContent, myInfo, opInfo) {
+	//아코디언 버튼 클릭 시 호출되는 API
+	console.log(myInfo);
+	const playerDiv = document.createElement("div");
+    playerDiv.className = "playerDiv";
+    
+    const myPlayerDiv = document.createElement("div");
+    myPlayerDiv.id = 'myPlayerDiv-' + index;
+    myPlayerDiv.innerHTML = "<h5>내 선수</h5>";
+    
+    const opPlayerDiv = document.createElement("div");
+    opPlayerDiv.id = 'opPlayerDiv-' + index;
+    opPlayerDiv.innerHTML = "<h5>상대 선수</h5>";
+    
+    playerDiv.append(myPlayerDiv);
+    playerDiv.append(opPlayerDiv);
+    
+    matchDetailContent.append(playerDiv);
 }
 
 </script>

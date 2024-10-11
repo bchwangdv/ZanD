@@ -6,14 +6,15 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="accordion-button"/>
+		<item key="selection" value="loading"/>
 		<list key="findhistory">
+			<item value="loading"/>
+			<item value="block"/>
 			<item value="accordion-button"/>
 			<item value="Btn"/>
 			<item value="btn"/>
 			<item value="accord"/>
 			<item value="empty"/>
-			<item value="loading"/>
 			<item value="l"/>
 			<item value="resultcon"/>
 			<item value="resultdiv"/>
@@ -22,7 +23,6 @@
 			<item value="console"/>
 			<item value="addev"/>
 			<item value="adD"/>
-			<item value="add"/>
 		</list>
 		<list key="replacehistory">
 		</list>
