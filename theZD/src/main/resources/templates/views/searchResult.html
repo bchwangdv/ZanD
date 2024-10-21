@@ -169,7 +169,8 @@ function loadMatchData(ouid, conditionNo) {
                 const accordionDiv = document.createElement("div");
                 const accordionBtn = document.createElement("button");
                 
-                accordionBtn.className = "accordion-button collapsed";
+                accordionBtn.className = "accordion-button button" + index + " collapsed";
+                
                 accordionBtn.setAttribute("data-bs-toggle", "collapse");
                 accordionBtn.setAttribute("data-bs-target", `#matchDetailContent-${index}`);
                 accordionBtn.setAttribute("aria-expanded", "false");
@@ -270,9 +271,11 @@ function loadMatchData(ouid, conditionNo) {
                 	matchContainer.appendChild(opResultDiv);
                 	matchContainer.appendChild(matchResultDiv);
                 }
-				
+
                 // 클릭할 때만 불러오게 해야되는데..
-                accordionBtn.addEventListener('click', loadMatchDetail(index, matchDetailContent, myInfo, opInfo));
+                accordionBtn.addEventListener('click', ()=>{
+                	loadMatchDetail(index, matchDetailContent, myInfo, opInfo)
+                });
                 
                 // 로딩 완료
                 $(".loading").css("display","none");
@@ -285,7 +288,10 @@ function loadMatchData(ouid, conditionNo) {
 
 function loadMatchDetail(index, matchDetailContent, myInfo, opInfo) {
 	//아코디언 버튼 클릭 시 호출되는 API
-	console.log(myInfo);
+	if (document.getElementById('myPlayerDiv-' + index) && document.getElementById('opPlayerDiv-' + index)) {
+		return;
+    }
+	
 	const playerDiv = document.createElement("div");
     playerDiv.className = "playerDiv";
     
@@ -297,10 +303,47 @@ function loadMatchDetail(index, matchDetailContent, myInfo, opInfo) {
     opPlayerDiv.id = 'opPlayerDiv-' + index;
     opPlayerDiv.innerHTML = "<h5>상대 선수</h5>";
     
+    let myPlayers = [];
+    let opPlayers = [];
+    let category;
+    for(var i = 0; i < myInfo.player.length; i++){
+    	myPlayers[i] = myInfo.player[i].spId;
+    	category = 0;
+    	loadPlayerInfo(index, myPlayers[i], category);
+    }
+    for(var i = 0; i < opInfo.player.length; i++){
+    	opPlayers[i] = opInfo.player[i].spId;
+    	category = 1;
+    	loadPlayerInfo(index, opPlayers[i], category);
+    }
+    
     playerDiv.append(myPlayerDiv);
     playerDiv.append(opPlayerDiv);
     
     matchDetailContent.append(playerDiv);
+}
+
+//속도가 느리다. 해시맵으로 전환 필요
+function loadPlayerInfo(index, spId, category){
+	const spIdReq = "https://open.api.nexon.com/static/fconline/meta/spid.json";
+	
+	fetch(spIdReq, {})
+	.then(response => response.json())
+    .then(spData => {
+    	for(var i = 0; i < spData.length; i++) {
+    		if(spData[i].id == spId) {
+    			if(category == 0) {
+    				const myPlayerDiv = document.getElementById('myPlayerDiv-' + index);
+    				const sId = spId.toString().substring(0,3);
+    				const seasonMetaReq = "https://open.api.nexon.com/static/fconline/meta/seasonid.json";
+        			myPlayerDiv.innerHTML += spData[i].name+"<br/>";
+    			} else {
+    				const opPlayerDiv = document.getElementById('opPlayerDiv-' + index);
+        			opPlayerDiv.innerHTML += spData[i].name+"<br/>";
+    			}
+    		}
+    	}
+    });
 }
 
 </script>

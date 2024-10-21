@@ -6,8 +6,11 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="loading"/>
+		<item key="selection" value="png"/>
 		<list key="findhistory">
+			<item value="png"/>
+			<item value="index"/>
+			<item value="meta"/>
 			<item value="loading"/>
 			<item value="block"/>
 			<item value="accordion-button"/>
@@ -20,9 +23,6 @@
 			<item value="resultdiv"/>
 			<item value="result"/>
 			<item value="opInfo"/>
-			<item value="console"/>
-			<item value="addev"/>
-			<item value="adD"/>
 		</list>
 		<list key="replacehistory">
 		</list>
