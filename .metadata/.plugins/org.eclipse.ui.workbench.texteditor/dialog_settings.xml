@@ -6,30 +6,30 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="png"/>
+		<item key="selection" value="myPlayersDiv"/>
 		<list key="findhistory">
+			<item value="myplayersdiv"/>
+			<item value="playersdiv"/>
+			<item value="limit"/>
+			<item value="playerdiv"/>
 			<item value="png"/>
-			<item value="index"/>
-			<item value="meta"/>
-			<item value="loading"/>
-			<item value="block"/>
-			<item value="accordion-button"/>
-			<item value="Btn"/>
-			<item value="btn"/>
-			<item value="accord"/>
-			<item value="empty"/>
-			<item value="l"/>
-			<item value="resultcon"/>
-			<item value="resultdiv"/>
-			<item value="result"/>
-			<item value="opInfo"/>
+			<item value="http"/>
+			<item value="mysub"/>
+			<item value="players"/>
+			<item value="opPlayers"/>
+			<item value="opPlayer"/>
+			<item value="op"/>
+			<item value="console"/>
+			<item value="spId"/>
+			<item value="spid"/>
+			<item value="player"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1082"/>
-		<item key="DIALOG_Y_ORIGIN" value="427"/>
+		<item key="DIALOG_X_ORIGIN" value="1559"/>
+		<item key="DIALOG_Y_ORIGIN" value="419"/>
 		<item key="DIALOG_WIDTH" value="418"/>
 		<item key="DIALOG_HEIGHT" value="523"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

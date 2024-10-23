@@ -118,8 +118,31 @@ body {
     color: white;
 }
 
-.playerDiv {
+.playersDiv {
 	display: flex;
+	padding: 1rem;
+}
+
+.playerDiv{
+    margin: 1rem;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.playerImg {
+	width: 40px;
+    margin-right: 1rem;
+    vertical-align: middle;
+}
+
+.seasonImg {
+	width: 20px;
+	margin-right: .2rem;
 }
 
 .loadingImg {
