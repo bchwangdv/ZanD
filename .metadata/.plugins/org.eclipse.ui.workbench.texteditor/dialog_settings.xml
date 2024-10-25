@@ -6,10 +6,16 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="myPlayersDiv"/>
+		<item key="selection" value="Container"/>
 		<list key="findhistory">
-			<item value="myplayersdiv"/>
+			<item value="container"/>
+			<item value="field"/>
+			<item value="allpl"/>
+			<item value="all"/>
 			<item value="playersdiv"/>
+			<item value="myfield"/>
+			<item value="opfield"/>
+			<item value="myplayersdiv"/>
 			<item value="limit"/>
 			<item value="playerdiv"/>
 			<item value="png"/>
@@ -17,12 +23,6 @@
 			<item value="mysub"/>
 			<item value="players"/>
 			<item value="opPlayers"/>
-			<item value="opPlayer"/>
-			<item value="op"/>
-			<item value="console"/>
-			<item value="spId"/>
-			<item value="spid"/>
-			<item value="player"/>
 		</list>
 		<list key="replacehistory">
 		</list>

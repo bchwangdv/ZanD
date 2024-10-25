@@ -252,33 +252,44 @@ function loadMatchData(ouid, conditionNo) {
     				}
 					matchContainer.appendChild(matchResultDiv);
 					
-					const playersDiv = document.createElement("div");
-				    playersDiv.className = "playersDiv";
-				    
+					const myFieldDiv = document.createElement("div");
+					myFieldDiv.id = "myFieldDiv";
+					
+					const allPlayersDiv = document.createElement("div");
+				    allPlayersDiv.id = "allPlayersDiv";
+				    allPlayersDiv.classList.add('row');
+				    		
 				    const myPlayersDiv = document.createElement("div");
 				    myPlayersDiv.id = 'myPlayersDiv-' + index;
-				    myPlayersDiv.classList.add('playerDiv');
+				    myPlayersDiv.classList.add('playersDiv');
+				    myPlayersDiv.classList.add('col-6');
 				    
 				    const mySubPlayersDiv = document.createElement("div");
 				    mySubPlayersDiv.id = 'mySubPlayersDiv-' + index;
-				    mySubPlayersDiv.classList.add('playerDiv');
-				    mySubPlayersDiv.innerHTML = "<h5></h5>";
+				    mySubPlayersDiv.classList.add('playersDiv');
+				    mySubPlayersDiv.classList.add('col-6');
+				    
+				    const opFieldDiv = document.createElement("div");
+					opFieldDiv.className = "opFieldDiv";
 				    
 				    const opPlayersDiv = document.createElement("div");
 				    opPlayersDiv.id = 'opPlayersDiv-' + index;
-				    opPlayersDiv.classList.add('playerDiv');
+				    opPlayersDiv.classList.add('playersDiv');
+				    opPlayersDiv.classList.add('col-6');
 				    
 				    const opSubPlayersDiv = document.createElement("div");
 				    opSubPlayersDiv.id = 'opSubPlayersDiv-' + index;
-				    opSubPlayersDiv.classList.add('playerDiv');
-				    opSubPlayersDiv.innerHTML = "<h5></h5>";
+				    opSubPlayersDiv.classList.add('playersDiv');
+				    opSubPlayersDiv.classList.add('col-6');
 				    
-				    playersDiv.append(myPlayersDiv);
-				    playersDiv.append(mySubPlayersDiv);
-				    playersDiv.append(opPlayersDiv);
-				    playersDiv.append(opSubPlayersDiv);
+// 				    allPlayersDiv.append(myFieldDiv);
+// 				    allPlayersDiv.append(opFieldDiv);
+				    allPlayersDiv.append(myPlayersDiv);
+				    allPlayersDiv.append(opPlayersDiv);
+				    allPlayersDiv.append(mySubPlayersDiv);
+				    allPlayersDiv.append(opSubPlayersDiv);
 				    
-				    matchDetailContent.append(playersDiv);
+				    matchDetailContent.append(allPlayersDiv);
 				
 					// 승,패에 색 추가
 					
@@ -362,6 +373,15 @@ function loadMetaData() {
 			seasonDataMap[season.seasonId] = season;
 		});
 	});
+	
+	const spPositionDataReq = "https://open.api.nexon.com/static/fconline/meta/spposition.json";
+	fetch(spPositionDataReq)
+	.then(response => response.json())
+	.then(spPositionData => {
+		spPositionData.forEach(spPosition => {
+			spPositionDataMap[spPosition.spposition] = spPosition;
+		});
+	});
 }
 //메타데이터 로드
 loadMetaData();
@@ -369,34 +389,52 @@ loadMetaData();
 function loadPlayersInfo(index, playerInfo, category){
 	const myPlayersDiv = document.getElementById('myPlayersDiv-' + index);
 	const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + index);
+	const myFieldDiv = document.getElementById('myFieldDiv');
+	const opPlayersDiv = document.getElementById('opPlayersDiv-' + index);
+	const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + index);
+	const opFieldDiv = document.getElementById('opFieldDiv');
+	
 	if(spDataMap[playerInfo.spId]) {
 		const playerImgSrc = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playerInfo.spId + ".png";
     	const onErrorImgSrc = "this.src='https://ssl.nexon.com/s2/game/fc/mobile/squadMaker/default/d_player.png'";
     	const seasonImgSrc = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonImg;
     	const playerName = spDataMap[playerInfo.spId].name;
+    	const playerGrade = playerInfo.spGrade;
+    	let playerGoal = 0;
+    	
+    	if(playerInfo.status.goal == 0) {
+    		playerGoal = "";
+    	} else {
+    		playerGoal = "<-" + playerInfo.status.goal + " GOAL!";
+    	}
     	
 		if(category == 0) {
 			if (playerInfo.spPosition == 28) {
                 mySubPlayersDiv.innerHTML += "<div class='player'>[교체] " + spDataMap[playerInfo.spId].name + "</div>";
             } else {
-            	myPlayersDiv.innerHTML += 
-            	    "<div class='player'>" + 
+            	console.log(playerGoal);
+            	myPlayersDiv.innerHTML +=
+            	    "<div class='player'>" +
             	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" + 
             	        "<img class='seasonImg' src='" + seasonImgSrc + "'/>" + 
-            	        playerName + 
+            	    	"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
+            	    	"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
+            	    	playerName + 
+            	    	"&nbsp&nbsp&nbsp&nbsp<div style='color:#c84a4c'>" + playerGoal + "</div>"
             	    "</div>";
             }
 		} else {
-			const opPlayersDiv = document.getElementById('opPlayersDiv-' + index);
-			const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + index);
 			if (playerInfo.spPosition == 28) {
                 opSubPlayersDiv.innerHTML += "<div class='player'>[교체] " + spDataMap[playerInfo.spId].name + "</div>";
             } else {
                 opPlayersDiv.innerHTML +=
 	                "<div class='player'>" + 
 	        	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" + 
-	        	        "<img class='seasonImg' src='" + seasonImgSrc + "'/>" + 
+	        	        "<img class='seasonImg' src='" + seasonImgSrc + "'/>" +
+            	    	"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
+            	    	"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
 	        	        playerName + 
+	        	        "&nbsp&nbsp&nbsp&nbsp<div style='color:#c84a4c'>" + playerGoal + "</div>"
 	        	    "</div>";
             }
 		}
