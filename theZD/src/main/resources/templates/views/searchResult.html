@@ -10,6 +10,8 @@
 <div th:replace="~{navbar :: navbar}"></div>
 <!-- css -->
 <link type="text/css" href='css/searchResult.css' rel="stylesheet">
+<link type="text/css" href='css/grade.css' rel="stylesheet">
+<link type="text/css" href='css/position.css' rel="stylesheet">
 <body>
 <div class="halfline"></div>
 <div class="container">
@@ -52,6 +54,7 @@ const API_KEY = "live_cae361c9b131e27b911a544f8f7a1b8b67203348dc67e50449555d9ad0
 const resultDiv = $("#searchResult");
 const resultContainer = $(".resultContainer");
 const nickname = [[${nickname}]]
+let loadStatus = {};
 
 if(nickname.trim() == '' || nickname == null) {
 	alert('닉네임을 입력해야합니다.');
@@ -80,10 +83,10 @@ fetch(ouidReq, {
 			}
 			this.classList.add('active');
 			$(".loading").css("display","block");
+			loadStatus = {};
 			loadMatchData(ouid, this.value);
 		});
 	}
-	
 	loadMatchData(ouid, conditionNo);
 })
 .catch(error => console.error(error));
@@ -266,11 +269,11 @@ function loadMatchData(ouid, conditionNo) {
 				    
 				    const mySubPlayersDiv = document.createElement("div");
 				    mySubPlayersDiv.id = 'mySubPlayersDiv-' + index;
-				    mySubPlayersDiv.classList.add('playersDiv');
+				    mySubPlayersDiv.classList.add('subPlayersDiv');
 				    mySubPlayersDiv.classList.add('col-6');
 				    
 				    const opFieldDiv = document.createElement("div");
-					opFieldDiv.className = "opFieldDiv";
+					opFieldDiv.id = "opFieldDiv";
 				    
 				    const opPlayersDiv = document.createElement("div");
 				    opPlayersDiv.id = 'opPlayersDiv-' + index;
@@ -279,11 +282,11 @@ function loadMatchData(ouid, conditionNo) {
 				    
 				    const opSubPlayersDiv = document.createElement("div");
 				    opSubPlayersDiv.id = 'opSubPlayersDiv-' + index;
-				    opSubPlayersDiv.classList.add('playersDiv');
+				    opSubPlayersDiv.classList.add('subPlayersDiv');
 				    opSubPlayersDiv.classList.add('col-6');
 				    
-// 				    allPlayersDiv.append(myFieldDiv);
-// 				    allPlayersDiv.append(opFieldDiv);
+				    allPlayersDiv.append(myFieldDiv);
+				    allPlayersDiv.append(opFieldDiv);
 				    allPlayersDiv.append(myPlayersDiv);
 				    allPlayersDiv.append(opPlayersDiv);
 				    allPlayersDiv.append(mySubPlayersDiv);
@@ -323,8 +326,6 @@ function loadMatchData(ouid, conditionNo) {
 	})
 	.catch(error => console.error(error))
 }
-
-const loadStatus = {};
 
 //아코디언 버튼 클릭 시 호출되는 function
 function loadMatchDetail(index, matchDetailContent, myInfo, opInfo) {
@@ -405,36 +406,39 @@ function loadPlayersInfo(index, playerInfo, category){
     	if(playerInfo.status.goal == 0) {
     		playerGoal = "";
     	} else {
-    		playerGoal = "<-" + playerInfo.status.goal + " GOAL!";
+    		playerGoal = playerInfo.status.goal + " GOAL!";
     	}
     	
 		if(category == 0) {
 			if (playerInfo.spPosition == 28) {
-                mySubPlayersDiv.innerHTML += "<div class='player'>[교체] " + spDataMap[playerInfo.spId].name + "</div>";
+                mySubPlayersDiv.innerHTML += "<div class='subPlayer'>[후보] " + spDataMap[playerInfo.spId].name + "</div>";
             } else {
-            	console.log(playerGoal);
             	myPlayersDiv.innerHTML +=
-            	    "<div class='player'>" +
+            	    "<div class='player' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>" +
             	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" + 
-            	        "<img class='seasonImg' src='" + seasonImgSrc + "'/>" + 
-            	    	"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
-            	    	"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
+            	        "<div class='playerInfo'>" +
+            	        	"<img class='seasonImg' src='" + seasonImgSrc + "'/>" + 
+            	    		"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
+            	    		"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
+            	    	"</div>" +
             	    	playerName + 
-            	    	"&nbsp&nbsp&nbsp&nbsp<div style='color:#c84a4c'>" + playerGoal + "</div>"
+            	    	"<div style='color:#c84a4c'>" + playerGoal + "</div>"
             	    "</div>";
             }
 		} else {
 			if (playerInfo.spPosition == 28) {
-                opSubPlayersDiv.innerHTML += "<div class='player'>[교체] " + spDataMap[playerInfo.spId].name + "</div>";
+                opSubPlayersDiv.innerHTML += "<div class='subPlayer'>[후보] " + spDataMap[playerInfo.spId].name + "</div>";
             } else {
                 opPlayersDiv.innerHTML +=
-	                "<div class='player'>" + 
-	        	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" + 
-	        	        "<img class='seasonImg' src='" + seasonImgSrc + "'/>" +
-            	    	"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
-            	    	"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
-	        	        playerName + 
-	        	        "&nbsp&nbsp&nbsp&nbsp<div style='color:#c84a4c'>" + playerGoal + "</div>"
+	                "<div class='player' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>" + 
+	        	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" +
+	        	        "<div class='playerInfo'>" +
+	        	       		"<img class='seasonImg' src='" + seasonImgSrc + "'/>" +
+            	    		"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
+            	    		"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
+            	    	"</div>" +	
+            	    	playerName +
+	        	        "<div style='color:#c84a4c'>" + playerGoal + "</div>"
 	        	    "</div>";
             }
 		}

@@ -6,23 +6,23 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Container"/>
+		<item key="selection" value="교체"/>
 		<list key="findhistory">
-			<item value="container"/>
-			<item value="field"/>
-			<item value="allpl"/>
-			<item value="all"/>
-			<item value="playersdiv"/>
-			<item value="myfield"/>
-			<item value="opfield"/>
-			<item value="myplayersdiv"/>
-			<item value="limit"/>
-			<item value="playerdiv"/>
-			<item value="png"/>
-			<item value="http"/>
+			<item value="교체"/>
+			<item value="r"/>
+			<item value="goal"/>
 			<item value="mysub"/>
+			<item value="g"/>
+			<item value="img"/>
 			<item value="players"/>
-			<item value="opPlayers"/>
+			<item value="opplayer"/>
+			<item value="playerimg"/>
+			<item value="name"/>
+			<item value="console.log"/>
+			<item value="console"/>
+			<item value="loadStatus"/>
+			<item value="load"/>
+			<item value="playersInfo"/>
 		</list>
 		<list key="replacehistory">
 		</list>
