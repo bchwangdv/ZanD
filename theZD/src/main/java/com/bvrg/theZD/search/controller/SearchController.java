@@ -16,6 +16,8 @@ public class SearchController {
 		
 		model.addAttribute("conditionNo", conditionNo);
 		model.addAttribute("nickname", nickname);
+		String rootPath = System.getProperty("user.dir");
+		System.out.println(rootPath);
 		return "searchResult";
 	}
 }
