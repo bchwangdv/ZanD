@@ -6,8 +6,10 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="교체"/>
+		<item key="selection" value="version"/>
 		<list key="findhistory">
+			<item value="version"/>
+			<item value="ver"/>
 			<item value="교체"/>
 			<item value="r"/>
 			<item value="goal"/>
@@ -21,8 +23,6 @@
 			<item value="console.log"/>
 			<item value="console"/>
 			<item value="loadStatus"/>
-			<item value="load"/>
-			<item value="playersInfo"/>
 		</list>
 		<list key="replacehistory">
 		</list>
