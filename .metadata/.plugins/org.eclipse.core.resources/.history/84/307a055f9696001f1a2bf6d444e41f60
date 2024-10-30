@@ -5,7 +5,7 @@ body {
 	background: linear-gradient(0deg, rgba(94,161,82,1) 0%, rgba(58,125,51,1) 100%);
 }
 
-.footerText {
+footer {
 	display: flex;
 	justify-content: center;
 	color: white;

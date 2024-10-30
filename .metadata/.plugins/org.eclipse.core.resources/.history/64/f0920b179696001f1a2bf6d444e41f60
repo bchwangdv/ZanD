@@ -28,12 +28,8 @@
 </div>
 </body>
 <footer>
-<div >
 © 2024 ZD HMD. All rights reserved. FC ONLINE is a registered trademark of Nexon and Electronic Arts.
-</div>
-<div>
 ZD HMD utilizes data provided by the NEXON Open API.
-</div>
 </footer>
 <script>
 	const searchButton = document.getElementById("searchButton");
