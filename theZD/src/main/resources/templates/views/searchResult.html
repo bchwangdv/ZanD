@@ -59,6 +59,9 @@ let loadStatus = {};
 if(nickname.trim() == '' || nickname == null) {
 	alert('닉네임을 입력해야합니다.');
 	window.location.replace('http://localhost:8080/main');
+} else if (nickname.includes(' ')) {
+	alert('닉네임엔 공백이 포함될 수 없습니다.');
+	window.location.replace('http://localhost:8080/main');
 }
 
 const ouidReq = "https://open.api.nexon.com/fconline/v1/id?nickname=" + nickname;
@@ -74,6 +77,11 @@ fetch(ouidReq, {
 	ouid = data.ouid
 	$("#ouidDiv").val(ouid);
 	loadDivisionData(ouid);
+	
+	if(data.error) {
+		alert('존재하지 않는 닉네임입니다.');
+		window.location.replace('http://localhost:8080/main');
+	}
 	
 	const tabs = document.getElementsByClassName('nav-link')
 	for(const tab of tabs){
@@ -219,10 +227,6 @@ function loadMatchData(ouid, conditionNo) {
                 }
                 matchContainer.appendChild(matchTypeDiv);
 
-                // 매치 결과 출력
-                // 검색 계정을 앞에 둠
-                // API에서 갑자기 상대 정보가 안뜬다?? ** 수정 필요 **
-                		
                 if(data.matchInfo[1] != undefined) {
                 	if (data.matchInfo[0].ouid == usersOuid) {
     					var myInfo = data.matchInfo[0]
@@ -318,9 +322,15 @@ function loadMatchData(ouid, conditionNo) {
                 	loadMatchDetail(index, matchDetailContent, myInfo, opInfo)
                 });
                 
+                
                 // 로딩 완료
                 $(".loading").css("display","none");
             });
+            const moreResult = document.createElement("button");
+            moreResult.classList.add('btn');
+            moreResult.classList.add('btn-primary');
+            moreResult.innerHTML = "더보기";
+            resultContainer.append(moreResult);
         })
 		.catch(error => console.error(error))
 	})

@@ -6,8 +6,12 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="version"/>
+		<item key="selection" value="Result"/>
 		<list key="findhistory">
+			<item value="result"/>
+			<item value="loading"/>
+			<item value="white"/>
+			<item value="foot"/>
 			<item value="version"/>
 			<item value="ver"/>
 			<item value="교체"/>
@@ -19,10 +23,6 @@
 			<item value="players"/>
 			<item value="opplayer"/>
 			<item value="playerimg"/>
-			<item value="name"/>
-			<item value="console.log"/>
-			<item value="console"/>
-			<item value="loadStatus"/>
 		</list>
 		<list key="replacehistory">
 		</list>
