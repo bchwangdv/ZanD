@@ -91,7 +91,6 @@ fetch(ouidReq, {
 				tab.classList.remove('active');
 			}
 			this.classList.add('active');
-			resultContainer.empty();
 			$(".loading").css("display","block");
 			loadStatus = {};
 			loadMatchData(ouid, this.value);
@@ -143,10 +142,10 @@ function loadDivisionData() {
 }
 
 let currentPage = 1;
-function loadMatchData(ouid, conditionNo, page = 1) {
+function loadMatchData(ouid, conditionNo) {
 	//페이지네이션
 	const resultLimit = 10;
-	const offset = (page - 1) * resultLimit ;
+	const offset = (page * 1) - limit ;
 	const matchReq = "https://open.api.nexon.com/fconline/v1/user/match?ouid=" + ouid + "&matchtype=" + conditionNo + "&limit=" + resultLimit + "&offset=" + offset;
 	fetch(matchReq, {
 		headers: {
@@ -155,15 +154,13 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 	})
 	.then(response => response.json())
     .then(matchIds => {
-    	console.log(matchIds);
-    	if (matchIds.length == 0 && currentPage == 1) {
+    	if (matchIds.length == 0) {
     		const matchContainer = document.createElement("div");
             matchContainer.className = "noResult";
             matchContainer.innerText = '최근 경기 결과가 없습니다.'
             resultDiv.append(matchContainer);
         	return;
         }
-    	
         const matchDetailPromises = matchIds.map(matchId => {
 		const matchDetailReq = "https://open.api.nexon.com/fconline/v1/match-detail?matchid=" + matchId;
 		return fetch(matchDetailReq, {
@@ -177,26 +174,24 @@ function loadMatchData(ouid, conditionNo, page = 1) {
         .then(matchDetails => {
         	matchDetails.sort((a, b) => new Date(b.matchDate) - new Date(a.matchDate));
         	const usersOuid = $("#ouidDiv").val();
+        	
             matchDetails.forEach((data, index) => {
-            	const numbering = (currentPage - 1) * resultLimit + index;
-            	console.log(numbering);
-            	
             	const matchContainer = document.createElement("div");
                 matchContainer.className = "match-container";
-                matchContainer.id = `match-container-${numbering}`;
+                matchContainer.id = `match-container-${index}`;
 				
                 const accordionDiv = document.createElement("div");
                 const accordionBtn = document.createElement("button");
                 
-                accordionBtn.className = "accordion-button button-" + numbering + " collapsed";
+                accordionBtn.className = "accordion-button button" + index + " collapsed";
                 
                 accordionBtn.setAttribute("data-bs-toggle", "collapse");
-                accordionBtn.setAttribute("data-bs-target", `#matchDetailContent-${numbering}`);
+                accordionBtn.setAttribute("data-bs-target", `#matchDetailContent-${index}`);
                 accordionBtn.setAttribute("aria-expanded", "false");
-                accordionBtn.setAttribute("aria-controls", `matchDetailContent-${numbering}`);
+                accordionBtn.setAttribute("aria-controls", `matchDetailContent-${index}`);
                 
                 const matchDetailContent = document.createElement("div");
-                matchDetailContent.id = `matchDetailContent-${numbering}`;
+                matchDetailContent.id = `matchDetailContent-${index}`;
                 matchDetailContent.className = "accordion-collapse collapse";
                 
                 const dateDiv = document.createElement("div");
@@ -275,12 +270,12 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    allPlayersDiv.classList.add('row');
 				    		
 				    const myPlayersDiv = document.createElement("div");
-				    myPlayersDiv.id = 'myPlayersDiv-' + numbering;
+				    myPlayersDiv.id = 'myPlayersDiv-' + index;
 				    myPlayersDiv.classList.add('playersDiv');
 				    myPlayersDiv.classList.add('col-6');
 				    
 				    const mySubPlayersDiv = document.createElement("div");
-				    mySubPlayersDiv.id = 'mySubPlayersDiv-' + numbering;
+				    mySubPlayersDiv.id = 'mySubPlayersDiv-' + index;
 				    mySubPlayersDiv.classList.add('subPlayersDiv');
 				    mySubPlayersDiv.classList.add('col-6');
 				    
@@ -288,12 +283,12 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 					opFieldDiv.id = "opFieldDiv";
 				    
 				    const opPlayersDiv = document.createElement("div");
-				    opPlayersDiv.id = 'opPlayersDiv-' + numbering;
+				    opPlayersDiv.id = 'opPlayersDiv-' + index;
 				    opPlayersDiv.classList.add('playersDiv');
 				    opPlayersDiv.classList.add('col-6');
 				    
 				    const opSubPlayersDiv = document.createElement("div");
-				    opSubPlayersDiv.id = 'opSubPlayersDiv-' + numbering;
+				    opSubPlayersDiv.id = 'opSubPlayersDiv-' + index;
 				    opSubPlayersDiv.classList.add('subPlayersDiv');
 				    opSubPlayersDiv.classList.add('col-6');
 				    
@@ -327,7 +322,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 }
 
                 accordionBtn.addEventListener('click', ()=>{
-                	loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo)
+                	loadMatchDetail(index, matchDetailContent, myInfo, opInfo)
                 });
                 
                 
@@ -335,19 +330,14 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 $(".loading").css("display","none");
             });
             const moreResult = document.createElement("button");
-            moreResult.classList.add('moreResult');
             moreResult.classList.add('btn');
             moreResult.classList.add('btn-primary');
             moreResult.innerHTML = "더보기";
             moreResult.addEventListener('click', () => {
             	currentPage++;
-            	$(".moreResult").css("display","none");
-            	loadMatchData(ouid, conditionNo, currentPage);
+            	loadMatchData(ouid, conditionNo);
             });
             resultContainer.append(moreResult);
-        	if (matchIds.length < 10 || (matchIds.length == 0 && currentPage != 1)) {
-        		$(".moreResult").css("display","none");
-            }
         })
 		.catch(error => console.error(error))
 	})
@@ -355,13 +345,13 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 }
 
 //아코디언 버튼 클릭 시 호출되는 function
-function loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo) {
+function loadMatchDetail(index, matchDetailContent, myInfo, opInfo) {
 	
-	if (loadStatus[numbering]) {
+	if (loadStatus[index]) {
         return;
     }
 	
-	loadStatus[numbering] = true;
+	loadStatus[index] = true;
 	
     let myPlayers = [];
     let opPlayers = [];
@@ -370,12 +360,12 @@ function loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo) {
    	for(var i = 0; i < myInfo.player.length; i++){
    		myPlayers[i] = myInfo.player[i];
 		category = 0;
-		loadPlayersInfo(numbering, myPlayers[i], category);
+		loadPlayersInfo(index, myPlayers[i], category);
     }
     for(var i = 0; i < opInfo.player.length; i++){
    		opPlayers[i] = opInfo.player[i];
        	category = 1;
-       	loadPlayersInfo(numbering, opPlayers[i], category);
+       	loadPlayersInfo(index, opPlayers[i], category);
     }
 }
 
@@ -414,12 +404,12 @@ function loadMetaData() {
 //메타데이터 로드
 loadMetaData();
 
-function loadPlayersInfo(numbering, playerInfo, category){
-	const myPlayersDiv = document.getElementById('myPlayersDiv-' + numbering);
-	const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + numbering);
+function loadPlayersInfo(index, playerInfo, category){
+	const myPlayersDiv = document.getElementById('myPlayersDiv-' + index);
+	const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + index);
 	const myFieldDiv = document.getElementById('myFieldDiv');
-	const opPlayersDiv = document.getElementById('opPlayersDiv-' + numbering);
-	const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + numbering);
+	const opPlayersDiv = document.getElementById('opPlayersDiv-' + index);
+	const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + index);
 	const opFieldDiv = document.getElementById('opFieldDiv');
 	
 	if(spDataMap[playerInfo.spId]) {

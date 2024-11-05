@@ -327,7 +327,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 }
 
                 accordionBtn.addEventListener('click', ()=>{
-                	loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo)
+                	loadMatchDetail(index, matchDetailContent, myInfo, opInfo)
                 });
                 
                 
@@ -355,13 +355,13 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 }
 
 //아코디언 버튼 클릭 시 호출되는 function
-function loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo) {
+function loadMatchDetail(index, matchDetailContent, myInfo, opInfo) {
 	
-	if (loadStatus[numbering]) {
+	if (loadStatus[index]) {
         return;
     }
 	
-	loadStatus[numbering] = true;
+	loadStatus[index] = true;
 	
     let myPlayers = [];
     let opPlayers = [];
@@ -370,12 +370,12 @@ function loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo) {
    	for(var i = 0; i < myInfo.player.length; i++){
    		myPlayers[i] = myInfo.player[i];
 		category = 0;
-		loadPlayersInfo(numbering, myPlayers[i], category);
+		loadPlayersInfo(index, myPlayers[i], category);
     }
     for(var i = 0; i < opInfo.player.length; i++){
    		opPlayers[i] = opInfo.player[i];
        	category = 1;
-       	loadPlayersInfo(numbering, opPlayers[i], category);
+       	loadPlayersInfo(index, opPlayers[i], category);
     }
 }
 
@@ -414,12 +414,12 @@ function loadMetaData() {
 //메타데이터 로드
 loadMetaData();
 
-function loadPlayersInfo(numbering, playerInfo, category){
-	const myPlayersDiv = document.getElementById('myPlayersDiv-' + numbering);
-	const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + numbering);
+function loadPlayersInfo(index, playerInfo, category){
+	const myPlayersDiv = document.getElementById('myPlayersDiv-' + index);
+	const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + index);
 	const myFieldDiv = document.getElementById('myFieldDiv');
-	const opPlayersDiv = document.getElementById('opPlayersDiv-' + numbering);
-	const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + numbering);
+	const opPlayersDiv = document.getElementById('opPlayersDiv-' + index);
+	const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + index);
 	const opFieldDiv = document.getElementById('opFieldDiv');
 	
 	if(spDataMap[playerInfo.spId]) {

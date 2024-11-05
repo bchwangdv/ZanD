@@ -327,7 +327,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 }
 
                 accordionBtn.addEventListener('click', ()=>{
-                	loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo)
+                	loadMatchDetail(myPlayers[i], matchDetailContent, myInfo, opInfo)
                 });
                 
                 
