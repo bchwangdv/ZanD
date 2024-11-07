@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SearchController {
 
 	@GetMapping("searchResult")
-	public String getSearchList(
-								@RequestParam("nickname") String nickname,
-								Model model) {
+	public String getSearchList(@RequestParam("nickname") String nickname, Model model) {
 		int conditionNo = 50; // default 공식경기 검색
 		
 		model.addAttribute("conditionNo", conditionNo);
 		model.addAttribute("nickname", nickname);
-		String rootPath = System.getProperty("user.dir");
 		return "searchResult";
 	}
 }

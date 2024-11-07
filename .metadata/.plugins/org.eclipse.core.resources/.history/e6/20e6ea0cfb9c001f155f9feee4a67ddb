@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.filterContainer {
+}
+
+#playersSeasonList {
+	display: flex;
+	margin: 1.5rem;
+	padding: 1rem;
+	background: white;
+	float: left;
+	align-content: start;
+	flex-wrap : wrap;
+}
+
+.seasonImgDiv {
+	margin: 1rem;
+    width: 32px;
+}

@@ -325,7 +325,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 	matchContainer.appendChild(opResultDiv);
                 	matchContainer.appendChild(matchResultDiv);
                 }
-
+				// 매치 디테일 조회
                 accordionBtn.addEventListener('click', ()=>{
                 	loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo)
                 });
@@ -334,6 +334,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 // 로딩 완료
                 $(".loading").css("display","none");
             });
+            // 더보기 구현
             const moreResult = document.createElement("button");
             moreResult.classList.add('moreResult');
             moreResult.classList.add('btn');
@@ -414,6 +415,7 @@ function loadMetaData() {
 //메타데이터 로드
 loadMetaData();
 
+//상세 조회 시 선수 정보 조회
 function loadPlayersInfo(numbering, playerInfo, category){
 	const myPlayersDiv = document.getElementById('myPlayersDiv-' + numbering);
 	const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + numbering);

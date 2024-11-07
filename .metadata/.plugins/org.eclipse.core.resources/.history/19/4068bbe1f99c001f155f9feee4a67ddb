@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ZD HMD</title>
+<!-- JQuery 3.7.1-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<!-- navbar -->
+<div th:replace="~{navbar :: navbar}"></div>
+<!-- css -->
+<link type="text/css" href='css/main.css' rel="stylesheet">
+<link type="text/css" href='css/playerSearch.css' rel="stylesheet">
+
+<body>
+<div class="halfline"></div>
+
+<div class="logoContainer">
+<!-- 	<img id="largeLogo" src="image/largeLogo.png"/> -->
+</div>
+<div class="filterContainer">
+	<div id="playersSeasonList" class="season-container row"></div>
+	<div>포지션 목록</div>
+	<div>급여</div>
+	<div>국적</div>
+	<div>팀 입력</div>
+</div>
+
+<div class="searchbarContainer">
+	<div class="searchbar">
+		<form id="searchForm" action="searchResult">
+			<div class="search-container">
+			    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="선수명을 입력하세요">
+			    <button id="searchButton" type="button" class="btn searchButton">🔍</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+</body>
+<!-- footer -->
+<div th:replace="~{footer :: footer}"></div>
+
+<script>
+
+let spDataMap = {};
+let seasonDataMap = new Map();
+let spPositionDataMap = {};
+
+function loadMetaData() {
+	const spDataReq = "https://open.api.nexon.com/static/fconline/meta/spid.json";
+	const seasonDataReq = "https://open.api.nexon.com/static/fconline/meta/seasonid.json";
+	const spPositionDataReq = "https://open.api.nexon.com/static/fconline/meta/spposition.json";
+
+	// 모든 데이터 로드를 Promise.all로 처리
+	Promise.all([
+		fetch(spDataReq).then(response => response.json()).then(spData => {
+			spData.forEach(player => {
+				spDataMap[player.id] = player;
+			});
+		}),
+		fetch(seasonDataReq).then(response => response.json()).then(seasonData => {
+			seasonData.forEach(season => {
+				seasonDataMap.set(season.seasonId, season);
+			});
+		}),
+		fetch(spPositionDataReq).then(response => response.json()).then(spPositionData => {
+			spPositionData.forEach(spPosition => {
+				spPositionDataMap[spPosition.spposition] = spPosition;
+			});
+		})
+	]).then(() => {
+		// 모든 데이터가 로드된 후에 화면에 데이터를 표시
+		displaySeasonImages();
+	});
+}
+
+// 메타데이터 로드
+loadMetaData();
+
+function displaySeasonImages() {
+	const playersSeasonList = document.getElementById("playersSeasonList");
+	seasonDataMap.forEach((season, seasonId) => {
+
+		const seasonImgDiv = document.createElement("div");
+		seasonImgDiv.classList.add("seasonImgDiv");
+		seasonImgDiv.classList.add(season.seasonId);
+		seasonImgDiv.classList.add("col");
+
+		const seasonImg = document.createElement("img");
+		
+		seasonImg.classList.add("seasonImg");
+		const seasonImgSrc = season.seasonImg;
+		seasonImg.src = seasonImgSrc;
+
+		// div에 이미지 추가
+		seasonImgDiv.appendChild(seasonImg);
+
+		// 전체 리스트에 시즌 아이템 추가
+		playersSeasonList.appendChild(seasonImgDiv);
+	});
+}	
+
+
+const searchButton = document.getElementById("searchButton");
+
+searchButton.addEventListener('click', ()=> {
+});
+</script>
+</html>

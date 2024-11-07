@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 	@GetMapping("main")
 	public String main() {
-	
 		return "main";
+	}
+	@GetMapping("playerSearch")
+	public String playerSearch() {
+		return "playerSearch";
 	}
 }

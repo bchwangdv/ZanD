@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" th:fragment="navbar">
+<head>
+<meta charset="UTF-8">
+<title>footer</title>
+<!--  css -->
+<link type="text/css" href='css/footer.css' rel="stylesheet">
+<!-- font -->
+</head>
+<body>
+<div class="footerText">
+	<div>
+		<div>
+			© 2024 ZD HMD. All rights reserved. FC ONLINE is a registered trademark of Nexon and Electronic Arts.
+		</div>
+		<div>
+			ZD HMD utilizes data provided by the NEXON Open API.
+		</div>
+	</div>
+</div>
+</body>
+</html>

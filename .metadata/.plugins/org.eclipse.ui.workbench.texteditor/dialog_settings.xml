@@ -6,23 +6,23 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Result"/>
+		<item key="selection" value="col"/>
 		<list key="findhistory">
-			<item value="result"/>
-			<item value="loading"/>
-			<item value="white"/>
+			<item value="col"/>
+			<item value="playersinfo"/>
+			<item value="season"/>
 			<item value="foot"/>
-			<item value="version"/>
-			<item value="ver"/>
-			<item value="교체"/>
-			<item value="r"/>
-			<item value="goal"/>
-			<item value="mysub"/>
-			<item value="g"/>
-			<item value="img"/>
-			<item value="players"/>
-			<item value="opplayer"/>
-			<item value="playerimg"/>
+			<item value="loadmatchde"/>
+			<item value="loadmatch"/>
+			<item value="loadplayers"/>
+			<item value="myplayers"/>
+			<item value="loadplayer"/>
+			<item value="index"/>
+			<item value="tab"/>
+			<item value="loading"/>
+			<item value="limit"/>
+			<item value="more"/>
+			<item value="data"/>
 		</list>
 		<list key="replacehistory">
 		</list>
