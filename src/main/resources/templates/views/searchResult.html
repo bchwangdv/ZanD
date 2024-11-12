@@ -59,10 +59,10 @@ let loadStatus = {};
 
 if(nickname.trim() == '' || nickname == null) {
 	alert('닉네임을 입력해야합니다.');
-	window.location.replace('http://localhost:8080/main');
+	window.location.replace('/main');
 } else if (nickname.includes(' ')) {
 	alert('닉네임엔 공백이 포함될 수 없습니다.');
-	window.location.replace('http://localhost:8080/main');
+	window.location.replace('/main');
 }
 
 const ouidReq = "https://open.api.nexon.com/fconline/v1/id?nickname=" + nickname;
