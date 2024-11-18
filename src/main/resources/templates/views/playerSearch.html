@@ -21,6 +21,7 @@
 <div class="filter-container">
 	<div id="playersSeasonList" class="season-container"></div>
 	<div id="positionList" class="position-container">
+		포지션
 		<!--공격수-->
 		<div class="btn-group" role="group" aria-label="FW">
 			<input type="checkbox" class="btn-check" id="ST" autocomplete="off">
@@ -63,13 +64,14 @@
 			<input type="checkbox" class="btn-check" id="GK" autocomplete="off">
 			<label class="btn btn-outline-warning" for="GK">GK</label>
 		</div>
-		<div>OVR
+	</div>
+	<div id="etcFilter" class="etcFilter-container">
+		<div class="OVR-container">OVR
 			<input id="minOVR" class="OVRinput" type="number"></input>~<input id="maxOVR" class="OVRinput" type="number"></input>
 		</div>
+		<div class="nation-container">국적<button id="nation" class="btn nationInput dropdown-toggle" type="button">----------</button></div>
+		<div class="career-container">커리어<button id="career" class="btn careerInput dropdown-toggle" type="button">----------</button></div>
 	</div>
-	
-	<div>국적</div>
-	<div>팀 입력</div>
 </div>
 
 <div class="searchbarContainer">
