@@ -131,15 +131,25 @@ function displaySeasonImages() {
 
 		const seasonImgDiv = document.createElement("div");
 		seasonImgDiv.classList.add("seasonImgDiv");
-
-		const seasonImg = document.createElement("img");
 		
+		const seasonImg = document.createElement("img");
 		seasonImg.classList.add("seasonImg");
+		
+		const seasonCheckbox = document.createElement("input");
+		seasonCheckbox.classList.add("seasonCheckbox");
+		seasonCheckbox.id = "seasonCheckbox-" + seasonId;
+		seasonCheckbox.type = "checkbox";
+		
+		const seasonImgLabel = document.createElement("label");
+		seasonImgLabel.htmlFor = "seasonCheckbox-" + seasonId;
+		seasonImgLabel.appendChild(seasonImg);
+		
 		const seasonImgSrc = season.seasonImg;
 		seasonImg.src = seasonImgSrc;
 
 		// div에 이미지 추가
-		seasonImgDiv.appendChild(seasonImg);
+		seasonImgDiv.appendChild(seasonCheckbox);
+		seasonImgDiv.appendChild(seasonImgLabel);
 
 		// 전체 리스트에 시즌 아이템 추가
 		playersSeasonList.appendChild(seasonImgDiv);

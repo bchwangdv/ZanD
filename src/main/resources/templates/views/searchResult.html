@@ -155,7 +155,6 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 	})
 	.then(response => response.json())
     .then(matchIds => {
-    	console.log(matchIds);
     	if (matchIds.length == 0 && currentPage == 1) {
     		const matchContainer = document.createElement("div");
             matchContainer.className = "noResult";
@@ -179,7 +178,6 @@ function loadMatchData(ouid, conditionNo, page = 1) {
         	const usersOuid = $("#ouidDiv").val();
             matchDetails.forEach((data, index) => {
             	const numbering = (currentPage - 1) * resultLimit + index;
-            	console.log(numbering);
             	
             	const matchContainer = document.createElement("div");
                 matchContainer.className = "match-container";
