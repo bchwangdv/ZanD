@@ -24,11 +24,6 @@
 	align-items: center;
 }
 
-.smallLogo {
-	width: 30px;
-	height: 30px;
-}
-
 .logoText a{
 	font-family: 'HakgyoansimPuzzleTTF-Black';
 	font-size: 1rem;
@@ -39,6 +34,7 @@
 }
 
 .navbar-container {
+	min-height: 5vh;
     white-space: nowrap;
     overflow: hidden;
 }
@@ -53,11 +49,8 @@
     text-shadow: 0.1rem 0.1rem 10px black;
 }
 
-.navbar span {
-    flex-shrink: 0;
-}
-
-.navbar span a {
+.navbar div a {
+	width:100%;
     color: white;
     font-family: 'Paperlogy-8ExtraBold';
     font-weight: bold;
@@ -66,4 +59,9 @@
     padding: 0.5rem;
     white-space: nowrap;
     display: inline-block;
+}
+
+.halfline {
+	height: 30px;
+	background: #EEEEEE;
 }

@@ -11,23 +11,23 @@
 <!-- css -->
 <link type="text/css" href='css/main.css' rel="stylesheet">
 <body>
-<div class="halfline"></div>
-<div class="logoContainer">
-<!-- 	<img id="largeLogo" src="image/largeLogo.png"/> -->
-</div>
-<div class="searchbarContainer">
-	<div class="searchbar">
-		<form id="searchForm" action="searchResult">
-			<div class="search-container">
-			    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="구단주 명을 입력하세요">
-			    <button id="searchButton" type="button" class="btn searchButton">🔍</button>
-			</div>
-		</form>
+<div id="wrap">
+	<div class="halfline"></div>
+	
+	<div class="searchbarContainer">
+		<div class="searchbar">
+			<form id="searchForm" action="searchResult">
+				<div class="search-container">
+				    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="구단주 명을 입력하세요">
+				    <button id="searchButton" type="button" class="btn searchButton">🔍</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
-</body>
 <!-- footer -->
 <div th:replace="~{footer :: footer}"></div>
+</body>
 <script>
 const searchButton = document.getElementById("searchButton");
 

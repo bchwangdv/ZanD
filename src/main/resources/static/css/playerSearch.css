@@ -1,8 +1,9 @@
 @charset "UTF-8";
 
 #playersSeasonList {
-	width: 1080px;
+	width: 80%;
 	display: flex;
+	justify-content:center;
 	margin: auto;
 	margin-top: 1.5rem;
 	padding: 1rem;
@@ -34,14 +35,14 @@ input[type=checkbox]:checked + label>img {
 }
 
 .position-container {
-	width: 1080px;
+	width: 80%;
 	margin: auto;
 	padding: 1rem;
 	background: white;
 }
 
 .etcFilter-container {
-	width: 1080px;
+	width: 80%;
 	margin: auto;
 	padding: 1rem;
 	background: white;

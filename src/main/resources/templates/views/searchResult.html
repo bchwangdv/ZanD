@@ -15,42 +15,47 @@
 <link type="text/css" href='css/grade.css' rel="stylesheet">
 <link type="text/css" href='css/position.css' rel="stylesheet">
 <body>
-<div class="halfline"></div>
-<div class="container">
-	<div class="namecardContainer">
-		<div class="namecard">
-			<div id="nickname">[[${nickname}]]</div>
-			<div id="divisionDiv">
-				<div class="division" id="officialDivision"></div>
-				<div class="division" id="managerModeDivision"></div>
+<div id="wrap">
+	<div class="halfline"></div>
+	<div class="container">
+		<div class="namecardContainer">
+			<div class="namecard">
+				<div id="nickname">[[${nickname}]]</div>
+				<div id="divisionDiv">
+					<div class="division" id="officialDivision"></div>
+					<div class="division" id="managerModeDivision"></div>
+				</div>
 			</div>
+			<!-- 여백 -->
+			<div style="width: 680px"></div>
 		</div>
-		<!-- 여백 -->
-		<div style="width: 680px"></div>
-	</div>
-	<input type="hidden" id="ouidDiv"></input> 
-	<div class="tabResultContainer">
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
-				<button class="nav-link active" id="officialMatch" value="50" >공식경기</button>
-			</li>
-			<li class="nav-item">
-				<button class="nav-link" id="classic1on1" value="40">클래식 1on1</button>
-			</li>
-			<li class="nav-item">
-				<button class="nav-link" id="managerMode" value="52">감독모드</button>
-			</li>
-		</ul>
-		<div class="loadingResultContainer">
-			<div class="loading">
-				<img class="loadingImg m-3" src='image/loading.gif'>
-				<h6>매치정보를 불러오고 있습니다..</h6>
-			</div>
-			<div class="resultContainer">
+		<input type="hidden" id="ouidDiv"></input> 
+		<div class="tabResultContainer">
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<button class="nav-link active" id="officialMatch" value="50" >공식경기</button>
+				</li>
+				<li class="nav-item">
+					<button class="nav-link" id="classic1on1" value="40">클래식 1on1</button>
+				</li>
+				<li class="nav-item">
+					<button class="nav-link" id="managerMode" value="52">감독모드</button>
+				</li>
+			</ul>
+			<div class="loadingResultContainer">
+				<div class="loading">
+					<img class="loadingImg m-3" src='image/loading.gif'>
+					<h6>매치정보를 불러오고 있습니다..</h6>
+				</div>
+				<div class="resultContainer">
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- footer -->
+<div th:replace="~{footer :: footer}"></div>
+</body>
 <script th:inline="javascript">
 
 const API_KEY = "live_cae361c9b131e27b911a544f8f7a1b8b67203348dc67e50449555d9ad071d788efe8d04e6d233bd35cf2fabdeb93fb0d";
@@ -473,7 +478,5 @@ function loadPlayersInfo(numbering, playerInfo, category){
 		}
 	}
 }
-
 </script>
-</body>
 </html>

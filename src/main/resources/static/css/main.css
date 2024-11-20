@@ -7,19 +7,10 @@ body {
 	background-attachment: fixed;
 }
 
-.halfline {
-	height: 30px;
-	background: #EEEEEE;
-}
-
-.logoContainer {
-	display: flex;
-	justify-content: center;
-}
-
-#largeLogo {
-	width: 650px;
-	margin-top: 100px;
+#wrap {
+	min-height: 75vh;
+	position : relative;
+	width: 100%;
 }
 
 .searchbarContainer {

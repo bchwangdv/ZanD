@@ -14,77 +14,74 @@
 
 <body>
 <div class="halfline"></div>
-
-<div class="logoContainer">
-<!-- 	<img id="largeLogo" src="image/largeLogo.png"/> -->
-</div>
-<div class="filter-container">
-	<div id="playersSeasonList" class="season-container"></div>
-	<div id="positionList" class="position-container">
-		포지션
-		<!--공격수-->
-		<div class="btn-group" role="group" aria-label="FW">
-			<input type="checkbox" class="btn-check" id="ST" autocomplete="off">
-			<label class="btn btn-outline-danger" for="ST">ST</label>
-			<input type="checkbox" class="btn-check" id="LW" autocomplete="off">
-			<label class="btn btn-outline-danger" for="LW">LW</label>
-			<input type="checkbox" class="btn-check" id="RW" autocomplete="off">
-			<label class="btn btn-outline-danger" for="RW">RW</label>
-			<input type="checkbox" class="btn-check" id="CF" autocomplete="off">
-			<label class="btn btn-outline-danger" for="CF">CF</label>
-		</div>
-		<!--미드필더-->
-		<div class="btn-group" role="group" aria-label="MF">
-			<input type="checkbox" class="btn-check" id="CM" autocomplete="off">
-			<label class="btn btn-outline-success" for="CM">CM</label>
-			<input type="checkbox" class="btn-check" id="CAM" autocomplete="off">
-			<label class="btn btn-outline-success" for="CAM">CAM</label>
-			<input type="checkbox" class="btn-check" id="CDM" autocomplete="off">
-			<label class="btn btn-outline-success" for="CDM">CDM</label>
-			<input type="checkbox" class="btn-check" id="LM" autocomplete="off">
-			<label class="btn btn-outline-success" for="LM">LM</label>
-			<input type="checkbox" class="btn-check" id="RM" autocomplete="off">
-			<label class="btn btn-outline-success" for="RM">RM</label>
-		</div>
-		<!--수비수-->
-		<div class="btn-group" role="group" aria-label="DF">
-			<input type="checkbox" class="btn-check" id="CB" autocomplete="off">
-			<label class="btn btn-outline-primary" for="CB">CB</label>
-			<input type="checkbox" class="btn-check" id="LB" autocomplete="off">
-			<label class="btn btn-outline-primary" for="LB">LB</label>
-			<input type="checkbox" class="btn-check" id="RB" autocomplete="off">
-			<label class="btn btn-outline-primary" for="RB">RB</label>
-			<input type="checkbox" class="btn-check" id="LWB" autocomplete="off">
-			<label class="btn btn-outline-primary" for="LWB">LWB</label>
-			<input type="checkbox" class="btn-check" id="RWB" autocomplete="off">
-			<label class="btn btn-outline-primary" for="RWB">RWB</label>
-		</div>
-		<!--골키퍼-->
-		<div class="btn-group" role="group" aria-label="FW">
-			<input type="checkbox" class="btn-check" id="GK" autocomplete="off">
-			<label class="btn btn-outline-warning" for="GK">GK</label>
-		</div>
-	</div>
-	<div id="etcFilter" class="etcFilter-container">
-		<div class="OVR-container">OVR
-			<input id="minOVR" class="OVRinput" type="number"></input>~<input id="maxOVR" class="OVRinput" type="number"></input>
-		</div>
-		<div class="nation-container">국적<button id="nation" class="btn nationInput dropdown-toggle" type="button">----------</button></div>
-		<div class="career-container">커리어<button id="career" class="btn careerInput dropdown-toggle" type="button">----------</button></div>
-	</div>
-</div>
-
-<div class="searchbarContainer">
-	<div class="searchbar">
-		<form id="searchForm" action="searchResult">
-			<div class="search-container">
-			    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="선수명을 입력하세요">
-			    <button id="searchButton" type="button" class="btn searchButton">🔍</button>
+<div id="wrap">
+	<div class="filter-container">
+		<div id="playersSeasonList" class="season-container"></div>
+		<div id="positionList" class="position-container">
+			포지션
+			<!--공격수-->
+			<div class="btn-group" role="group" aria-label="FW">
+				<input type="checkbox" class="btn-check" id="ST" autocomplete="off">
+				<label class="btn btn-outline-danger" for="ST">ST</label>
+				<input type="checkbox" class="btn-check" id="LW" autocomplete="off">
+				<label class="btn btn-outline-danger" for="LW">LW</label>
+				<input type="checkbox" class="btn-check" id="RW" autocomplete="off">
+				<label class="btn btn-outline-danger" for="RW">RW</label>
+				<input type="checkbox" class="btn-check" id="CF" autocomplete="off">
+				<label class="btn btn-outline-danger" for="CF">CF</label>
 			</div>
-		</form>
+			<!--미드필더-->
+			<div class="btn-group" role="group" aria-label="MF">
+				<input type="checkbox" class="btn-check" id="CM" autocomplete="off">
+				<label class="btn btn-outline-success" for="CM">CM</label>
+				<input type="checkbox" class="btn-check" id="CAM" autocomplete="off">
+				<label class="btn btn-outline-success" for="CAM">CAM</label>
+				<input type="checkbox" class="btn-check" id="CDM" autocomplete="off">
+				<label class="btn btn-outline-success" for="CDM">CDM</label>
+				<input type="checkbox" class="btn-check" id="LM" autocomplete="off">
+				<label class="btn btn-outline-success" for="LM">LM</label>
+				<input type="checkbox" class="btn-check" id="RM" autocomplete="off">
+				<label class="btn btn-outline-success" for="RM">RM</label>
+			</div>
+			<!--수비수-->
+			<div class="btn-group" role="group" aria-label="DF">
+				<input type="checkbox" class="btn-check" id="CB" autocomplete="off">
+				<label class="btn btn-outline-primary" for="CB">CB</label>
+				<input type="checkbox" class="btn-check" id="LB" autocomplete="off">
+				<label class="btn btn-outline-primary" for="LB">LB</label>
+				<input type="checkbox" class="btn-check" id="RB" autocomplete="off">
+				<label class="btn btn-outline-primary" for="RB">RB</label>
+				<input type="checkbox" class="btn-check" id="LWB" autocomplete="off">
+				<label class="btn btn-outline-primary" for="LWB">LWB</label>
+				<input type="checkbox" class="btn-check" id="RWB" autocomplete="off">
+				<label class="btn btn-outline-primary" for="RWB">RWB</label>
+			</div>
+			<!--골키퍼-->
+			<div class="btn-group" role="group" aria-label="FW">
+				<input type="checkbox" class="btn-check" id="GK" autocomplete="off">
+				<label class="btn btn-outline-warning" for="GK">GK</label>
+			</div>
+		</div>
+		<div id="etcFilter" class="etcFilter-container">
+			<div class="OVR-container">OVR
+				<input id="minOVR" class="OVRinput" type="number"></input>~<input id="maxOVR" class="OVRinput" type="number"></input>
+			</div>
+			<div class="nation-container">국적<button id="nation" class="btn nationInput dropdown-toggle" type="button">----------</button></div>
+			<div class="career-container">커리어<button id="career" class="btn careerInput dropdown-toggle" type="button">----------</button></div>
+		</div>
+	</div>
+	
+	<div class="searchbarContainer">
+		<div class="searchbar">
+			<form id="searchForm" action="searchResult">
+				<div class="search-container">
+				    <input id="nickname" name="nickname" type="text" class="search-input" placeholder="선수명을 입력하세요">
+				    <button id="searchButton" type="button" class="btn searchButton">🔍</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
-
 
 </body>
 <!-- footer -->
