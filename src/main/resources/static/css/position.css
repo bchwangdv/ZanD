@@ -146,24 +146,10 @@
     top: 80%;
 }
 
-.playerImg {
-	width: 40px;
-    vertical-align: middle;
-}
-
-.seasonImg {
-	width: 20px;
-}
-
-.loadingImg {
-	width: 50px;
-}
-
 /*포지션 이미지 css*/
 .item[data-position=LS], .item[data-position=ST], .item[data-position=RS],
 .item[data-position=LW], .item[data-position=LF],  .item[data-position=CF], .item[data-position=RF], .item[data-position=RW]
 {
-	margin: .2rem;
 	background: linear-gradient(182deg, #c53414, #511f11);
 	color: white;
 	text-align:center;
@@ -175,7 +161,6 @@
 .item[data-position=LM], .item[data-position=LCM], .item[data-position=CM], .item[data-position=RCM], .item[data-position=RM],
 .item[data-position=LDM],  .item[data-position=CDM], .item[data-position=RDM]
 {
-	margin: .2rem;
 	background: linear-gradient(180deg, #66db4f, #1b4c14);
 	color: white;
 	text-align:center;
@@ -187,7 +172,6 @@
 .item[data-position=LWB], .item[data-position=LCB],  .item[data-position=CB], .item[data-position=RCB], .item[data-position=RWB],
 .item[data-position=LB],  .item[data-position=SW], .item[data-position=RB]
 {
-	margin: .2rem;
 	background : linear-gradient(182deg, #3bb0e3, #12395b);
 	color: white;
 	text-align:center;
@@ -197,7 +181,6 @@
 }
 
 .item[data-position=GK] {
-	margin: .2rem;
 	background: linear-gradient(180deg, #e6db44, #796b15);
 	color: white;
 	text-align:center;

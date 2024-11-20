@@ -433,30 +433,30 @@ function loadPlayersInfo(numbering, playerInfo, category){
 		const playerImgSrc = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playerInfo.spId + ".png";
     	const onErrorImgSrc = "this.src='https://ssl.nexon.com/s2/game/fc/mobile/squadMaker/default/d_player.png'";
     	const seasonImgSrc = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonImg;
+    	const cardBackImgSrc = seasonImgSrc.replace('/season/', '/card/');
+    	console.log(cardBackImgSrc);
     	const playerName = spDataMap[playerInfo.spId].name;
     	const playerGrade = playerInfo.spGrade;
     	let playerGoal = 0;
-    	
     	if(playerInfo.status.goal == 0) {
     		playerGoal = "";
     	} else {
     		playerGoal = playerInfo.status.goal + " GOAL!";
     	}
-    	
 		if(category == 0) {
 			if (playerInfo.spPosition == 28) {
                 mySubPlayersDiv.innerHTML += "<div class='subPlayer'>[후보] " + spDataMap[playerInfo.spId].name + "</div>";
             } else {
             	myPlayersDiv.innerHTML +=
             	    "<div class='player' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>" +
+            	   		"<img class='cardBack' src='" + cardBackImgSrc + "'></img>" +
             	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" + 
             	        "<div class='playerInfo'>" +
             	        	"<img class='seasonImg' src='" + seasonImgSrc + "'/>" + 
             	    		"<div class='grade" + playerGrade + "'>" + playerGrade + "</div>" +
             	    		"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
             	    	"</div>" +
-            	    	playerName + 
-            	    	"<div style='color:#c84a4c'>" + playerGoal + "</div>"
+            	    	playerName +
             	    "</div>";
             }
 		} else {
@@ -465,6 +465,8 @@ function loadPlayersInfo(numbering, playerInfo, category){
             } else {
                 opPlayersDiv.innerHTML +=
 	                "<div class='player' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>" + 
+                		"<img class='cardBack' src='" + cardBackImgSrc + "'></img>" +
+                		
 	        	        "<img class='playerImg' src='" + playerImgSrc + "' onerror=\"" + onErrorImgSrc + "\"/>" +
 	        	        "<div class='playerInfo'>" +
 	        	       		"<img class='seasonImg' src='" + seasonImgSrc + "'/>" +
@@ -472,7 +474,7 @@ function loadPlayersInfo(numbering, playerInfo, category){
             	    		"<div class='item' data-position='"+ spPositionDataMap[playerInfo.spPosition].desc + "'>"+ spPositionDataMap[playerInfo.spPosition].desc +"</div>" +
             	    	"</div>" +	
             	    	playerName +
-	        	        "<div style='color:#c84a4c'>" + playerGoal + "</div>"
+	        	        
 	        	    "</div>";
             }
 		}
