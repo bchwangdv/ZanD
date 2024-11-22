@@ -60,8 +60,8 @@
 }
 .player[data-position=LM] {
     position: absolute;
-    left: 20%;
-    top: 45%;
+    left: 10%;
+    top: 30%;
 }
 .player[data-position=LCM] {
     position: absolute;
@@ -80,8 +80,8 @@
 }
 .player[data-position=RM] {
     position: absolute;
-    left: 60%;
-    top: 45%;
+    left: 70%;
+    top: 30%;
 }
 .player[data-position=LDM] {
     position: absolute;
@@ -101,7 +101,7 @@
 /* 수비수 */
 .player[data-position=LWB] {
     position: absolute;
-    left: 10%;
+    left: 5%;
     top: 55%;
 }
 .player[data-position=LCB] {

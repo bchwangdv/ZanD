@@ -80,8 +80,8 @@ body {
 	margin: 15px 0px;
 }
 
-.container {
-	min-height: 1000px;	
+#result-Container {
+	display: block;
 }
 
 #searchResult {

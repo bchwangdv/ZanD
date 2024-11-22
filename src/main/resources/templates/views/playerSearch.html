@@ -11,9 +11,7 @@
 <!-- css -->
 <link type="text/css" href='css/main.css' rel="stylesheet">
 <link type="text/css" href='css/playerSearch.css' rel="stylesheet">
-
 <body>
-<div class="halfline"></div>
 <div id="wrap">
 	<div class="filter-container">
 		<div id="playersSeasonList" class="season-container"></div>
@@ -88,6 +86,18 @@
 <div th:replace="~{footer :: footer}"></div>
 
 <script>
+
+// window.onload = function() {
+// fetch('playerSearchResult', { 
+// 	method: 'GET' 
+// })
+// .then(response => response.json())
+// .then(data => {
+// 		console.log(data);
+// 	})
+// };
+
+
 
 let spDataMap = {};
 let seasonDataMap = new Map();

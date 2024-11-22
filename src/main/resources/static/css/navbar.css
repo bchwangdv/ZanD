@@ -14,39 +14,33 @@
     font-style: normal;
 }
 
-.container-fluid {
-	background: rgba(58,125,51,1);
-	padding: 0rem 1rem;
+.container {
+	display: flex;
+	justify-content: center;
 }
 
-.logoContainer {
+.logo {
 	display: flex;
 	align-items: center;
 }
 
-.logoText a{
+.logo a{
 	font-family: 'HakgyoansimPuzzleTTF-Black';
 	font-size: 1rem;
+	text-decoration: none;
 	color: white;
 	text-shadow: 0.1rem 0.1rem 10px black;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.navbar-container {
-	min-height: 5vh;
-    white-space: nowrap;
-    overflow: hidden;
+	flex-wrap: nowrap;
+	overflow: hidden;
 }
 
 .navbar {
-    display: flex;
-    justify-content: flex-start;
-    width: max-content;
     color: white;
     align-items: center;
     padding: 10px;
     text-shadow: 0.1rem 0.1rem 10px black;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .navbar div a {
