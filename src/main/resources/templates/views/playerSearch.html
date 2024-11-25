@@ -87,17 +87,15 @@
 
 <script>
 
-// window.onload = function() {
-// fetch('playerSearchResult', { 
-// 	method: 'GET' 
-// })
-// .then(response => response.json())
-// .then(data => {
-// 		console.log(data);
-// 	})
-// };
-
-
+window.onload = function() {
+	fetch('playerSearchResult', { 
+		method: 'GET' 
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+	})
+};
 
 let spDataMap = {};
 let seasonDataMap = new Map();

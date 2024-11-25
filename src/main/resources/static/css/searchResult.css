@@ -175,9 +175,30 @@ body {
 	padding: 2px 5px;
 }
 
-.cardBack {
+.cardBackDiv {
 	position: absolute;
 	top: -35px;
-	width: 130px;
 	z-index: -10;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.cardBack {
+	width:130px;
+	pointer-events: none;
+}
+
+.playerName[data-seasonid="820"],
+.playerName[data-seasonid="825"]
+{
+	color: white;
+}
+
+.goal {
+	color: #CC1100;
+	position: absolute;
+	top: -20px;
+	border-radius: 5px;
+	background: white;
+	padding: 0px 10px;
 }

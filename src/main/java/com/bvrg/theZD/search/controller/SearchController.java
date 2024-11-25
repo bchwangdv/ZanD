@@ -27,16 +27,15 @@ public class SearchController {
 	@GetMapping("playerSearchResult")
 	public String getPlayersDB() {
 		Document doc;
-		try {
-			doc = Jsoup.connect("https://https://fconline.nexon.com/datacenter/").get();
-			System.out.println(doc.title());
-			Elements playerInfos = doc.select(".player_info");
-			for (Element playerInfo : playerInfos) {
-				System.out.println(playerInfo);
+			try {
+				doc = Jsoup.connect("https://fconline.nexon.com/datacenter").get();
+				Elements playerInfos = doc.select("#divPlayerList");
+				for(Element playerInfo : playerInfos) {
+					System.out.println(playerInfo);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		return "playerSearch";
 	}
 }
