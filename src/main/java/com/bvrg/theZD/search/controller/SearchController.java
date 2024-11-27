@@ -1,17 +1,15 @@
 package com.bvrg.theZD.search.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import com.bvrg.theZD.search.model.vo.Player;
+import com.bvrg.theZD.search.repository.PlayerRepository;
 
 @Controller
 public class SearchController {
@@ -24,18 +22,40 @@ public class SearchController {
 		return "searchResult";
 	}
 	
-	@GetMapping("playerSearchResult")
-	public String getPlayersDB() {
-		Document doc;
-			try {
-				doc = Jsoup.connect("https://fconline.nexon.com/datacenter").get();
-				Elements playerInfos = doc.select("#divPlayerList");
-				for(Element playerInfo : playerInfos) {
-					System.out.println(playerInfo);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		return "playerSearch";
-	}
+	@Autowired
+	private PlayerRepository playerRepository;
+	
+    @GetMapping("playerSearchResult")
+    public String playerSearchResult(Model model) {
+    	
+        List<Player> players = playerRepository.findAll();
+        
+        System.out.println("players:" + players);
+        model.addAttribute("players", players);
+    	
+        return "playerSearch";
+    }
+	
+	
+	
+// 크롤링
+//	@GetMapping("playerSearchResult")
+//	public String playerSearchResult() {
+//		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+//		
+//		ChromeOptions options = new ChromeOptions();
+//		options.addArguments("--headless");
+//		
+//		WebDriver driver = new ChromeDriver(options);
+//		String baseUrl = "https://fifaonline4.inven.co.kr/dataninfo/player/";
+//		driver.get(baseUrl);
+//		
+//		List<WebElement> playerElements = driver.findElements(By.cssSelector(".fifa4.name > b"));
+//        for (WebElement player : playerElements) {
+//            System.out.println(player.getText());
+//        }
+//		
+//		driver.quit();
+//		return "playerSearch";
+//	}
 }
