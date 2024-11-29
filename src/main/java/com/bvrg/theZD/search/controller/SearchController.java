@@ -3,6 +3,8 @@ package com.bvrg.theZD.search.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,39 +25,14 @@ public class SearchController {
 	}
 	
 	@Autowired
-	private PlayerRepository playerRepository;
+	private PlayerRepository PlayerRepository;
 	
     @GetMapping("playerSearchResult")
     public String playerSearchResult(Model model) {
-    	
-        List<Player> players = playerRepository.findAll();
-        
-        System.out.println("players:" + players);
-        model.addAttribute("players", players);
-    	
+        System.out.println("전체 데이터 출력:");
+        PlayerRepository.findAll().forEach();
+        PlayerRepository.findByPId("101");
+        model.addAttribute("player", player);
         return "playerSearch";
     }
-	
-	
-	
-// 크롤링
-//	@GetMapping("playerSearchResult")
-//	public String playerSearchResult() {
-//		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-//		
-//		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--headless");
-//		
-//		WebDriver driver = new ChromeDriver(options);
-//		String baseUrl = "https://fifaonline4.inven.co.kr/dataninfo/player/";
-//		driver.get(baseUrl);
-//		
-//		List<WebElement> playerElements = driver.findElements(By.cssSelector(".fifa4.name > b"));
-//        for (WebElement player : playerElements) {
-//            System.out.println(player.getText());
-//        }
-//		
-//		driver.quit();
-//		return "playerSearch";
-//	}
 }
