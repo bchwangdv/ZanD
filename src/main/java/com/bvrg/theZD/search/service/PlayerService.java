@@ -13,6 +13,6 @@ public class PlayerService {
     private PlayerRepository PlayerRepository;
 
     public Player getPlayerBySpId(String spId) {
-        return PlayerRepository.findByPId(spId);
+        return PlayerRepository.findBySpId(spId);
     }
 }

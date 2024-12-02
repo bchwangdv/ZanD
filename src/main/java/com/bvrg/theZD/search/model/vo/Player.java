@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Player {
 	@Id
 	private String id; // mongoDB 고유키
-	private String PId; // 선수고유번호
+	private String spId; // 선수고유번호
 	private String salary; // 급여
 	private String height; // 키
 	private String weight; // 몸무게

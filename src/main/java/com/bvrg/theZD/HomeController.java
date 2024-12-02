@@ -11,6 +11,7 @@ public class HomeController {
 	}
 	@GetMapping("playerSearch")
 	public String playerSearch() {
+		
 		return "playerSearch";
 	}
 }

@@ -2,13 +2,17 @@ package com.bvrg.theZD.search.controller;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bvrg.theZD.search.model.vo.Player;
 import com.bvrg.theZD.search.repository.PlayerRepository;
@@ -29,10 +33,27 @@ public class SearchController {
 	
     @GetMapping("playerSearchResult")
     public String playerSearchResult(Model model) {
-        System.out.println("전체 데이터 출력:");
-        PlayerRepository.findAll().forEach();
-        PlayerRepository.findByPId("101");
-        model.addAttribute("player", player);
-        return "playerSearch";
+		List<Player> player = PlayerRepository.findAll();
+		System.out.println("전체 데이터 출력:" + player);
+		model.addAttribute("player", player);
+		return "playerSearch";
+    }
+    
+    @GetMapping("playersDBSave")
+    @ResponseBody
+    public void playersDBSave() {
+    		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+    		
+    		ChromeOptions options = new ChromeOptions();
+    		options.addArguments("--headless");
+    		
+    		WebDriver driver = new ChromeDriver(options);
+    		String baseUrl = "https://fifaonline4.inven.co.kr/dataninfo/player/";
+    		driver.get(baseUrl);
+    		
+    		List<WebElement> playerElements = driver.findElements(By.cssSelector(".fifa4.name > b"));
+            for (WebElement player : playerElements) {
+            }
+    		driver.quit();
     }
 }
