@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+#wrap {
+	min-height: 70vh;
+}
+
 body {
 	width: 100%;
 	height: 100%;
@@ -7,10 +11,28 @@ body {
 	background-attachment: fixed;
 }
 
-#wrap {
-	min-height: 100vh;
-	position : relative;
-	width: 100%;
+.logoContainer {
+	text-align: center;
+	padding: 20px;
+}
+
+.logoMain {
+    font-family: 'HakgyoansimPuzzleTTF-Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
+	font-size: 130px;
+	color: white;
+	letter-spacing: 2px;
+	margin: 40px 0 0 0;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.logoPhrase {
+	font-family: 'Paperlogy-8ExtraBold';
+	font-size: 35px;
+	color: #EEEEEE;
+	letter-spacing: 1px;
+	margin: 5px 0 0;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .searchbarContainer {

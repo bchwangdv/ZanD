@@ -164,8 +164,9 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     	if (matchIds.length == 0 && currentPage == 1) {
     		const matchContainer = document.createElement("div");
             matchContainer.className = "noResult";
-            matchContainer.innerText = '최근 경기 결과가 없습니다.'
-            resultDiv.append(matchContainer);
+            matchContainer.innerText = '최근 경기 결과가 없습니다.';
+            resultContainer.append(matchContainer);
+            $(".loading").css("display","none");
         	return;
         }
     	
@@ -248,7 +249,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     					var opInfo = data.matchInfo[0]
     				}
     				
-    				opResultDiv.innerHTML = '상대 : ' + opInfo.nickname;
+    				opResultDiv.innerHTML = 'VS. ' + opInfo.nickname;
     				matchContainer.appendChild(opResultDiv);
     				
     				// 몰수승, 몰수패 Check
