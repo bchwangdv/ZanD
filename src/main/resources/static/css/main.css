@@ -9,6 +9,7 @@ body {
 	height: 100%;
 	background: rgba(58,125,51,1);
 	background-attachment: fixed;
+	font-family: 'Paperlogy-8ExtraBold';
 }
 
 .logoContainer {
@@ -27,7 +28,6 @@ body {
 }
 
 .logoPhrase {
-	font-family: 'Paperlogy-8ExtraBold';
 	font-size: 35px;
 	color: #EEEEEE;
 	letter-spacing: 1px;

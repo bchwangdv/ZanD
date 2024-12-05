@@ -208,8 +208,17 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 const matchTypeDiv = document.createElement("div");
                 const opResultDiv = document.createElement("div");
                 const matchResultDiv = document.createElement("div");
+                const matchContainerSub1 = document.createElement("div");
+                matchContainerSub1.className = "sub1"
+                const matchContainerSub2 = document.createElement("div");
+                matchContainerSub2.className = "sub2"
+                const matchContainerSub3 = document.createElement("div");
+                matchContainerSub3.className = "sub3"
                 
                 accordionBtn.append(matchContainer);
+                matchContainer.append(matchContainerSub1);
+                matchContainer.append(matchContainerSub2);
+                matchContainer.append(matchContainerSub3);
                 accordionDiv.append(accordionBtn);
                 accordionDiv.append(matchDetailContent);
                 resultContainer.append(accordionDiv);
@@ -228,17 +237,18 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 
             	// 날짜 및 시간 출력
 				dateDiv.innerHTML = matchDate;
-				matchContainer.appendChild(dateDiv);
+                dateDiv.className = "date";
+				matchContainerSub1.appendChild(dateDiv);
 
                 // 매치 타입 출력
                 if(data.matchType == 50) {
-                	matchTypeDiv.innerHTML = '매치타입 : 공식경기';
+                	matchTypeDiv.innerHTML = '<button type="button" class="btn btn-primary" disabled>공식경기</button>';
                 } else if (data.matchType == 40) {
-                	matchTypeDiv.innerHTML = '매치타입 : 클래식 1on1';
+                	matchTypeDiv.innerHTML = '<button type="button" class="btn btn-info" disabled>클래식 1on1</button>';
                 } else if (data.matchType == 52) {
-                	matchTypeDiv.innerHTML = '매치타입 : 감독모드';
+                	matchTypeDiv.innerHTML = '<button type="button" class="btn btn-secondary" disabled>감독모드</button>';
                 }
-                matchContainer.appendChild(matchTypeDiv);
+                matchContainerSub1.appendChild(matchTypeDiv);
 
                 if(data.matchInfo[1] != undefined) {
                 	if (data.matchInfo[0].ouid == usersOuid) {
@@ -249,8 +259,8 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     					var opInfo = data.matchInfo[0]
     				}
     				
-    				opResultDiv.innerHTML = 'VS. ' + opInfo.nickname;
-    				matchContainer.appendChild(opResultDiv);
+    				opResultDiv.innerHTML = 'vs. ' + opInfo.nickname;
+    				opResultDiv.className = "opResult";
     				
     				// 몰수승, 몰수패 Check
     				
@@ -265,13 +275,19 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     					opInfo.matchDetail.matchResult = "몰수승"
     				}
     				
-    				matchResultDiv.innerHTML = myInfo.shoot.goalTotal + ' : ' + opInfo.shoot.goalTotal + ' ' + myInfo.matchDetail.matchResult;
+    				matchResultDiv.innerHTML = myInfo.shoot.goalTotal + ' : ' + opInfo.shoot.goalTotal + ' '
+    				const WDL = document.createElement("div");
+    				WDL.className = "WDL";
+    				WDL.innerHTML = myInfo.matchDetail.matchResult;
     				
     				if(!(myInfo.shoot.shootOutScore == 0 && opInfo.shoot.shootOutScore == 0)){
-    					matchResultDiv.innerHTML += ' (' + myInfo.shoot.shootOutScore + '-' + opInfo.shoot.shootOutScore + ')';
+    					matchResultDiv.innerHTML += "<div class='shootOut'>(" + myInfo.shoot.shootOutScore + "-" + opInfo.shoot.shootOutScore + ")</div>";
     				}
-					matchContainer.appendChild(matchResultDiv);
-					
+    				matchResultDiv.className = "matchResult"
+					matchContainerSub2.appendChild(matchResultDiv);
+    				matchContainerSub2.appendChild(opResultDiv);
+    				matchContainerSub3.appendChild(WDL);
+    				
 					const myFieldDiv = document.createElement("div");
 					myFieldDiv.id = "myFieldDiv";
 					
@@ -315,10 +331,13 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 					
 					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
 						accordionBtn.style.background = "#0077FF26"; //승
+						WDL.style.color = "#0d6efd";
 					} else if (myInfo.matchDetail.matchResult == '패' || myInfo.matchDetail.matchResult == '몰수패'){
 						accordionBtn.style.background = "#FF000010"; //패
+						WDL.style.color = "#dc3545";
 					} else {
 						accordionBtn.style.background = "#00FF0010"; //무
+						WDL.style.color = "#198754";
 					}
 					
                 } else {
@@ -327,8 +346,8 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 	matchResultDiv.innerHTML = '매치 불러오기를 실패했습니다.';
                 	opResultDiv.classList.add('text-danger');
                 	matchResultDiv.classList.add('text-danger');
-                	matchContainer.appendChild(opResultDiv);
-                	matchContainer.appendChild(matchResultDiv);
+                	matchContainerSub2.appendChild(opResultDiv);
+                	matchContainerSub2.appendChild(matchResultDiv);
                 }
 				// 매치 디테일 조회
                 accordionBtn.addEventListener('click', ()=>{

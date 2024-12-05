@@ -39,13 +39,58 @@ body {
 }
 
 .match-container {
+	display: flex;
 	font-size: 20px;
+}
+
+.date {
+	margin: 0 0 10px 0;
+}
+
+.sub1, .sub2, .sub3 {
+	height: 150px;
+}
+
+.sub2 {
+	display: flex;
+	justify-content:center;
+	width: 700px;
+	align-items: center;
+}
+.sub3 {
+	display: flex;
+	position: absolute;\
+	top: 40px;
+	left: 800px;
+	width: 200px;
+	justify-content: center;
+	align-items: center;
+}
+
+.opResult {
+	width: 200px;
+}
+
+.matchResult {
+	font-size: 40px;
+	margin: 10px;
+	text-align: center;
+}
+
+.shootOut {
+	font-size: 20px;
+}
+
+
+.WDL {
+	font-size: 30px;
 }
 
 .accordion-button {
 	color: black !important;
 	margin: 10px 0px;
 	border-radius: .25rem;
+	justify-content: between;
 }
 
 .accordion-collapse {
@@ -189,7 +234,9 @@ body {
 }
 
 .playerName[data-seasonid="820"],
-.playerName[data-seasonid="825"]
+.playerName[data-seasonid="825"],
+.playerName[data-seasonid="826"],
+.playerName[data-seasonid="827"]
 {
 	color: white;
 }
