@@ -465,7 +465,7 @@ function loadPlayersInfo(numbering, playerInfo, category) {
         targetDiv.innerHTML += "<div class='subPlayer'>[후보] " + playerName + "</div>";
     } else {
 		const playerCard = 
-			'<div class="player" data-position="' + playerPosition + '" onclick="showPlayerDetail('+ playerInfo +')">' +
+			'<div class="player player-' + playerInfo.spId + '" data-position="' + playerPosition + '" >' +
 				'<div class="goal" data-goal="' + playerInfo.status.goal + '">' + playerGoal + '</div>' +
 				'<div class="cardBackDiv"><img class="cardBack" src="' + cardBackImgSrc + '" /></div>' +
 				'<img class="playerImg" src="' + playerImgSrc + '" onerror="' + onErrorImgSrc + '" />' +
@@ -477,7 +477,10 @@ function loadPlayersInfo(numbering, playerInfo, category) {
 				'<div class="playerName" data-seasonId="' + seasonId + '">' + playerName + '</div>' +
 			'</div>';
 		targetDiv.innerHTML += playerCard;
+		const playerDiv = document.getElementById("player-" + playerInfo.spId);
+	    console.log(playerDiv);
 	}
+    
     
     window.showPlayerDetail = function(playerInfo) {
         const modal = document.getElementById("playerModal");
@@ -485,42 +488,42 @@ function loadPlayersInfo(numbering, playerInfo, category) {
 
         // 모달에 클릭된 요소의 HTML 콘텐츠를 복사
         modalPlayerInfo.innerHTML = "";
-//         	"<div>" +
-//             "<h3>선수 정보</h3>" +
-//             "<h4><strong>선수 평점:</strong> " + (playerInfo.status.spRating || 0) + "</h4>" +
+        	"<div>" +
+            "<h3>선수 정보</h3>" +
+            "<h4><strong>선수 평점:</strong> " + (playerInfo.status.spRating || 0) + "</h4>" +
 
-//             // 공격 항목
-//             "<h4>공격</h4>" +
-//             "<p>슛 수: " + (playerInfo.status.shoot || 0) + "<br/>" +
-//             "유효 슛 수: " + (playerInfo.status.effectiveShoot || 0) + "<br/>" +
-//             "어시스트 수: " + (playerInfo.status.assist || 0) + "<br/>" +
-//             "득점 수: " + (playerInfo.status.goal || 0) + "</p>" +
+            // 공격 항목
+            "<h4>공격</h4>" +
+            "<p>슛 수: " + (playerInfo.status.shoot || 0) + "<br/>" +
+            "유효 슛 수: " + (playerInfo.status.effectiveShoot || 0) + "<br/>" +
+            "어시스트 수: " + (playerInfo.status.assist || 0) + "<br/>" +
+            "득점 수: " + (playerInfo.status.goal || 0) + "</p>" +
 
-//             // 기술 항목
-//             "<h4>기술</h4>" +
-//             "<p>인터셉트 수: " + (playerInfo.status.intercept || 0) + "<br/>" +
-//             "디펜딩 수: " + (playerInfo.status.defending || 0) + "<br/>" +
-//             "패스 시도 수: " + (playerInfo.status.passTry || 0) + "<br/>" +
-//             "패스 성공 수: " + (playerInfo.status.passSuccess || 0) + "<br/>" +
-//             "드리블 시도 수: " + (playerInfo.status.dribbleTry || 0) + "<br/>" +
-//             "드리블 성공 수: " + (playerInfo.status.dribbleSuccess || 0) + "<br/>" +
-//             "볼 소유 시도 수: " + (playerInfo.status.ballPossesionTry || 0) + "<br/>" +
-//             "볼 소유 성공 수: " + (playerInfo.status.ballPossesionSuc || 0) + "<br/>" +
-//             "공중볼 경합 시도 수: " + (playerInfo.status.aerialTry || 0) + "<br/>" +
-//             "공중볼 경합 성공 수: " + (playerInfo.status.aerialSuccess || 0) + "</p>" +
+            // 기술 항목
+            "<h4>기술</h4>" +
+            "<p>인터셉트 수: " + (playerInfo.status.intercept || 0) + "<br/>" +
+            "디펜딩 수: " + (playerInfo.status.defending || 0) + "<br/>" +
+            "패스 시도 수: " + (playerInfo.status.passTry || 0) + "<br/>" +
+            "패스 성공 수: " + (playerInfo.status.passSuccess || 0) + "<br/>" +
+            "드리블 시도 수: " + (playerInfo.status.dribbleTry || 0) + "<br/>" +
+            "드리블 성공 수: " + (playerInfo.status.dribbleSuccess || 0) + "<br/>" +
+            "볼 소유 시도 수: " + (playerInfo.status.ballPossesionTry || 0) + "<br/>" +
+            "볼 소유 성공 수: " + (playerInfo.status.ballPossesionSuc || 0) + "<br/>" +
+            "공중볼 경합 시도 수: " + (playerInfo.status.aerialTry || 0) + "<br/>" +
+            "공중볼 경합 성공 수: " + (playerInfo.status.aerialSuccess || 0) + "</p>" +
 
-//             // 수비 항목
-//             "<h4>수비</h4>" +
-//             "<p>블락 시도 수: " + (playerInfo.status.blockTry || 0) + "<br/>" +
-//             "블락 성공 수: " + (playerInfo.status.block || 0) + "<br/>" +
-//             "태클 시도 수: " + (playerInfo.status.tackleTry || 0) + "<br/>" +
-//             "태클 성공 수: " + (playerInfo.status.tackle || 0) + "</p>" +
+            // 수비 항목
+            "<h4>수비</h4>" +
+            "<p>블락 시도 수: " + (playerInfo.status.blockTry || 0) + "<br/>" +
+            "블락 성공 수: " + (playerInfo.status.block || 0) + "<br/>" +
+            "태클 시도 수: " + (playerInfo.status.tackleTry || 0) + "<br/>" +
+            "태클 성공 수: " + (playerInfo.status.tackle || 0) + "</p>" +
 
-//             // 카드 항목
-//             "<h4>카드</h4>" +
-//             "<p>옐로 카드: " + (playerInfo.status.yellowCards || 0) + "<br/>" +
-//             "레드 카드: " + (playerInfo.status.redCards || 0) + "</p>" +
-//             "</div>";
+            // 카드 항목
+            "<h4>카드</h4>" +
+            "<p>옐로 카드: " + (playerInfo.status.yellowCards || 0) + "<br/>" +
+            "레드 카드: " + (playerInfo.status.redCards || 0) + "</p>" +
+            "</div>";
 
         // 모달 표시
         modal.style.display = "block";
