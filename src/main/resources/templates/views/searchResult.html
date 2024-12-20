@@ -50,8 +50,8 @@
 <div id="playerModal" class="modal">
     <div class="modal-content">
         <span id="closeButton" class="close">X</span>
-        <div id="playerMatchDetail">
-        </div>
+        <div id="playerModalHeader"></div>
+        <div id="playerMatchDetail"></div>
     </div>
 </div>
 <div th:replace="~{footer :: footer}"></div>
@@ -273,7 +273,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     				if(opInfo.shoot.goalTotal == null) {
     					opInfo.shoot.goalTotal = 0;
     					opInfo.shoot.shootOutScore = 0;
-    					opInfo.matchDetail.matchResult = "몰수승"
+    					myInfo.matchDetail.matchResult = "몰수승"
     				}
     				
     				matchResultDiv.innerHTML = myInfo.shoot.goalTotal + ' : ' + opInfo.shoot.goalTotal + ' '
@@ -300,6 +300,10 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    myPlayersDiv.id = 'myPlayersDiv-' + numbering;
 				    myPlayersDiv.classList.add('playersDiv');
 				    myPlayersDiv.classList.add('col-6');
+				    //몰수패 체크
+				    if(myInfo.matchDetail.matchResult == "몰수패") {
+				    	myPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
+    				}
 				    
 				    const mySubPlayersDiv = document.createElement("div");
 				    mySubPlayersDiv.id = 'mySubPlayersDiv-' + numbering;
@@ -311,6 +315,11 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    
 				    const opPlayersDiv = document.createElement("div");
 				    opPlayersDiv.id = 'opPlayersDiv-' + numbering;
+				    //몰수승 체크
+				    if(myInfo.matchDetail.matchResult == "몰수승") {
+				    	opPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
+    				}
+				    
 				    opPlayersDiv.classList.add('playersDiv');
 				    opPlayersDiv.classList.add('col-6');
 				    
@@ -446,9 +455,9 @@ function loadPlayersInfo(numbering, playerInfo, category) {
     const mySubPlayersDiv = document.getElementById('mySubPlayersDiv-' + numbering);
     const opPlayersDiv = document.getElementById('opPlayersDiv-' + numbering);
     const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + numbering);
-
+	
     if (!spDataMap[playerInfo.spId]) return;
-
+	
     const playerImgSrc = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playerInfo.spId + ".png";
     const onErrorImgSrc = "this.src='https://ssl.nexon.com/s2/game/fc/mobile/squadMaker/default/d_player.png'";
     const seasonId = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonId;
@@ -464,77 +473,169 @@ function loadPlayersInfo(numbering, playerInfo, category) {
     if (isSubPlayer) {
         targetDiv.innerHTML += "<div class='subPlayer'>[후보] " + playerName + "</div>";
     } else {
-		const playerCard = 
-			'<div class="player player-' + playerInfo.spId + '" data-position="' + playerPosition + '" >' +
-				'<div class="goal" data-goal="' + playerInfo.status.goal + '">' + playerGoal + '</div>' +
-				'<div class="cardBackDiv"><img class="cardBack" src="' + cardBackImgSrc + '" /></div>' +
-				'<img class="playerImg" src="' + playerImgSrc + '" onerror="' + onErrorImgSrc + '" />' +
-				'<div class="playerInfo">' +
-					'<img class="seasonImg" src="' + seasonImgSrc + '" />' +
-					'<div class="grade' + playerGrade + '">' + playerGrade + '</div>' +
-					'<div class="item" data-position="' + playerPosition + '">' + playerPosition + '</div>' +
-				'</div>' +
-				'<div class="playerName" data-seasonId="' + seasonId + '">' + playerName + '</div>' +
-			'</div>';
-		targetDiv.innerHTML += playerCard;
-		const playerDiv = document.getElementById("player-" + playerInfo.spId);
-	    console.log(playerDiv);
+    	// playerCard를 동적으로 생성
+        const playerCard = document.createElement('div');
+        playerCard.classList.add('player', 'player-' + playerInfo.spId);
+        playerCard.setAttribute('data-position', playerPosition);
+        
+        // showPlayerDetail 함수 호출을 위한 이벤트 리스너 추가
+        playerCard.addEventListener('click', function() {
+            showPlayerDetail(playerInfo);
+            console.log("클릭 테스트");
+        });
+        
+        // goal div 생성
+        const goalDiv = document.createElement('div');
+        goalDiv.classList.add('goal');
+        goalDiv.setAttribute('data-goal', playerInfo.status.goal);
+        goalDiv.textContent = playerGoal;
+        playerCard.appendChild(goalDiv);
+
+        // 카드 뒷면 이미지 div 생성
+        const cardBackDiv = document.createElement('div');
+        cardBackDiv.classList.add('cardBackDiv');
+        const cardBackImg = document.createElement('img');
+        cardBackImg.classList.add('cardBack');
+        cardBackImg.setAttribute('src', cardBackImgSrc);
+        cardBackDiv.appendChild(cardBackImg);
+        playerCard.appendChild(cardBackDiv);
+
+        // 플레이어 이미지
+        const playerImg = document.createElement('img');
+        playerImg.classList.add('playerImg');
+        playerImg.setAttribute('src', playerImgSrc);
+        playerImg.setAttribute('onerror', onErrorImgSrc);
+        playerCard.appendChild(playerImg);
+
+        // 플레이어 정보 div 생성
+        const playerInfoDiv = document.createElement('div');
+        playerInfoDiv.classList.add('playerInfo');
+        const seasonImg = document.createElement('img');
+        seasonImg.classList.add('seasonImg');
+        seasonImg.setAttribute('src', seasonImgSrc);
+        playerInfoDiv.appendChild(seasonImg);
+        const gradeDiv = document.createElement('div');
+        gradeDiv.classList.add('grade' + playerGrade);
+        gradeDiv.textContent = playerGrade;
+        playerInfoDiv.appendChild(gradeDiv);
+        const positionDiv = document.createElement('div');
+        positionDiv.classList.add('item');
+        positionDiv.setAttribute('data-position', playerPosition);
+        positionDiv.textContent = playerPosition;
+        playerInfoDiv.appendChild(positionDiv);
+        playerCard.appendChild(playerInfoDiv);
+
+        // 플레이어 이름 div 생성
+        const playerNameDiv = document.createElement('div');
+        playerNameDiv.classList.add('playerName');
+        playerNameDiv.setAttribute('data-seasonId', seasonId);
+        playerNameDiv.textContent = playerName;
+        playerCard.appendChild(playerNameDiv);
+
+        // targetDiv에 playerCard 추가
+        targetDiv.appendChild(playerCard);
 	}
+}    
+
+function showPlayerDetail(playerInfo) {
+	const playerModal = document.getElementById('playerModal');
+    const playerMatchDetail = document.getElementById('playerMatchDetail');
     
+    const playerCard = document.querySelector('.player-' + playerInfo.spId);
+    const clonedPlayerCard = playerCard.cloneNode(true);
     
-    window.showPlayerDetail = function(playerInfo) {
-        const modal = document.getElementById("playerModal");
-        const modalPlayerInfo = document.getElementById("playerMatchDetail");
+    const playerModalHeader = document.getElementById('playerModalHeader');
+    playerModalHeader.innerHTML = '';
+    playerModalHeader.appendChild(clonedPlayerCard);
+    
+    const playerDetailDiv = document.createElement('div');
+    playerDetailDiv.classList.add('playerDetail');
 
-        // 모달에 클릭된 요소의 HTML 콘텐츠를 복사
-        modalPlayerInfo.innerHTML = "";
-        	"<div>" +
-            "<h3>선수 정보</h3>" +
-            "<h4><strong>선수 평점:</strong> " + (playerInfo.status.spRating || 0) + "</h4>" +
+    const leftColumn = document.createElement('div');
+    leftColumn.classList.add('leftColumn');
 
-            // 공격 항목
-            "<h4>공격</h4>" +
-            "<p>슛 수: " + (playerInfo.status.shoot || 0) + "<br/>" +
-            "유효 슛 수: " + (playerInfo.status.effectiveShoot || 0) + "<br/>" +
-            "어시스트 수: " + (playerInfo.status.assist || 0) + "<br/>" +
-            "득점 수: " + (playerInfo.status.goal || 0) + "</p>" +
+    const attackSection = document.createElement('div');
+    attackSection.classList.add('section');
+    const attackHeader = document.createElement('h4');
+    attackHeader.textContent = '공격';
+    attackSection.appendChild(attackHeader);
+    const attackStats = document.createElement('p');
+    attackStats.innerHTML = `
+        슛 수: ${playerInfo.status.shoot || 0}<br/>
+        유효 슛 수: ${playerInfo.status.effectiveShoot || 0}<br/>
+        어시스트 수: ${playerInfo.status.assist || 0}<br/>
+        득점 수: ${playerInfo.status.goal || 0}
+    `;
+    attackSection.appendChild(attackStats);
+    leftColumn.appendChild(attackSection);
 
-            // 기술 항목
-            "<h4>기술</h4>" +
-            "<p>인터셉트 수: " + (playerInfo.status.intercept || 0) + "<br/>" +
-            "디펜딩 수: " + (playerInfo.status.defending || 0) + "<br/>" +
-            "패스 시도 수: " + (playerInfo.status.passTry || 0) + "<br/>" +
-            "패스 성공 수: " + (playerInfo.status.passSuccess || 0) + "<br/>" +
-            "드리블 시도 수: " + (playerInfo.status.dribbleTry || 0) + "<br/>" +
-            "드리블 성공 수: " + (playerInfo.status.dribbleSuccess || 0) + "<br/>" +
-            "볼 소유 시도 수: " + (playerInfo.status.ballPossesionTry || 0) + "<br/>" +
-            "볼 소유 성공 수: " + (playerInfo.status.ballPossesionSuc || 0) + "<br/>" +
-            "공중볼 경합 시도 수: " + (playerInfo.status.aerialTry || 0) + "<br/>" +
-            "공중볼 경합 성공 수: " + (playerInfo.status.aerialSuccess || 0) + "</p>" +
+    const defenseSection = document.createElement('div');
+    defenseSection.classList.add('section');
+    const defenseHeader = document.createElement('h4');
+    defenseHeader.textContent = '수비';
+    defenseSection.appendChild(defenseHeader);
+    const defenseStats = document.createElement('p');
+    defenseStats.innerHTML = `
+        블락 시도 수: ${playerInfo.status.blockTry || 0}<br/>
+        블락 성공 수: ${playerInfo.status.block || 0}<br/>
+        태클 시도 수: ${playerInfo.status.tackleTry || 0}<br/>
+        태클 성공 수: ${playerInfo.status.tackle || 0}
+    `;
+    defenseSection.appendChild(defenseStats);
+    leftColumn.appendChild(defenseSection);
 
-            // 수비 항목
-            "<h4>수비</h4>" +
-            "<p>블락 시도 수: " + (playerInfo.status.blockTry || 0) + "<br/>" +
-            "블락 성공 수: " + (playerInfo.status.block || 0) + "<br/>" +
-            "태클 시도 수: " + (playerInfo.status.tackleTry || 0) + "<br/>" +
-            "태클 성공 수: " + (playerInfo.status.tackle || 0) + "</p>" +
+    const cardSection = document.createElement('div');
+    cardSection.classList.add('section');
+    const cardHeader = document.createElement('h4');
+    cardHeader.textContent = '카드';
+    cardSection.appendChild(cardHeader);
+    const cardStats = document.createElement('p');
+    cardStats.innerHTML = `
+        옐로 카드: ${playerInfo.status.yellowCards || 0}<br/>
+        레드 카드: ${playerInfo.status.redCards || 0}
+    `;
+    cardSection.appendChild(cardStats);
+    leftColumn.appendChild(cardSection);
 
-            // 카드 항목
-            "<h4>카드</h4>" +
-            "<p>옐로 카드: " + (playerInfo.status.yellowCards || 0) + "<br/>" +
-            "레드 카드: " + (playerInfo.status.redCards || 0) + "</p>" +
-            "</div>";
+    playerDetailDiv.appendChild(leftColumn);
 
-        // 모달 표시
-        modal.style.display = "block";
+    const rightColumn = document.createElement('div');
+    rightColumn.classList.add('rightColumn');
 
-        // 닫기 버튼 이벤트
-        const closeModal = document.getElementById("closeButton");
-        closeModal.onclick = () => {
-            modal.style.display = "none";
-        };
-    };
+    const skillSection = document.createElement('div');
+    skillSection.classList.add('section');
+    const skillHeader = document.createElement('h4');
+    skillHeader.textContent = '기술';
+    skillSection.appendChild(skillHeader);
+    const skillStats = document.createElement('p');
+    skillStats.innerHTML = `
+        인터셉트 수: ${playerInfo.status.intercept || 0}<br/>
+        디펜딩 수: ${playerInfo.status.defending || 0}<br/>
+        패스 시도 수: ${playerInfo.status.passTry || 0}<br/>
+        패스 성공 수: ${playerInfo.status.passSuccess || 0}<br/>
+        드리블 시도 수: ${playerInfo.status.dribbleTry || 0}<br/>
+        드리블 성공 수: ${playerInfo.status.dribbleSuccess || 0}<br/>
+        볼 소유 시도 수: ${playerInfo.status.ballPossesionTry || 0}<br/>
+        볼 소유 성공 수: ${playerInfo.status.ballPossesionSuc || 0}<br/>
+        공중볼 경합 시도 수: ${playerInfo.status.aerialTry || 0}<br/>
+        공중볼 경합 성공 수: ${playerInfo.status.aerialSuccess || 0}
+    `;
+    skillSection.appendChild(skillStats);
+    rightColumn.appendChild(skillSection);
+
+    playerDetailDiv.appendChild(rightColumn);
+
+    playerMatchDetail.innerHTML = ''; // 이전 내용 초기화
+    playerMatchDetail.appendChild(playerDetailDiv);
+
+    playerModal.style.display = 'block';
 }
+
+//모달 닫기 기능
+document.getElementById('closeButton').addEventListener('click', function() {
+    const playerModal = document.getElementById('playerModal');
+    playerModal.style.display = 'none';
+});
 
 // 모달 외부 클릭 시 닫기
 window.onclick = function(event) {

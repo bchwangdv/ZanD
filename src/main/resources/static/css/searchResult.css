@@ -179,6 +179,14 @@ body {
 	position: relative;
 }
 
+.forfeiture {
+	position: absolute;
+	width : 300px;
+	top: 50%;
+	left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .player {
 	width: 100px;
     display: flex;
@@ -264,9 +272,10 @@ body {
 }
 
 .modal-content {
+	text-align: center;
+	width: 30%;
     margin: 10% auto;
     padding: 20px;
-    width: 20%;
     border-radius: 10px;
 }
 
@@ -284,4 +293,30 @@ body {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.playerDetail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.playerDetail h4, .playerDetail p {
+    margin: 10px 0;
+}
+
+/* 모달 내부 카드 */
+#playerModalHeader .player {
+    cursor: default;
+    transform: scale(1);
+    z-index: auto;
+    position: static;
+}
+
+#playerModalHeader {
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	padding: 20px;
 }
