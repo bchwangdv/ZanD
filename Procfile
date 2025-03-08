@@ -1,1 +1,1 @@
-web: java -jar build/libs/theZD-0.0.1-SNAPSHOT.jar
+web: java -jar build/libs/zand-0.0.1-SNAPSHOT.jar
