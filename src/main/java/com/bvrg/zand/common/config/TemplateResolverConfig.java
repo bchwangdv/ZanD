@@ -1,4 +1,4 @@
-package com.bvrg.theZD.common.config;
+package com.bvrg.zand.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.templatemode.TemplateMode;

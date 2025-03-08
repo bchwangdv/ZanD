@@ -1,13 +1,13 @@
-package com.bvrg.theZD;
+package com.bvrg.zand;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TheZDApplication {
+public class ZanDApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TheZDApplication.class, args);
+		SpringApplication.run(ZanDApplication.class, args);
 	}
 
 }

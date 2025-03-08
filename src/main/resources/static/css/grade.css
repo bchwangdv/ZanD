@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
-/*강화 등급 css*/
-
+/* 강화 등급 css */
 .grade0, .grade1 {
 	text-align:center;
 	font-size: 11px;
@@ -56,4 +55,18 @@
     border-top-color: #e9d36c !important;
     border-left-color: #e9d36c !important;
     border-right-color: #cda000 !important;
+}
+
+.grade11, .grade12, .grade13 {
+	text-align: center;
+	font-size: 11px;
+	width: 20px;
+	height: 16px;
+    color: #2d2b43 !important;
+    background-image: url("https://ssl.nexon.com/s2/game/fc/online/obt/datacenter/bg_plt.png") !important;
+    background-size: cover;
+    border: 1.5px solid #5274c0 !important;
+    border-top-color: #bdc5e5 !important;
+    border-left-color: #607dc4 !important;
+    border-right-color: #5274c0 !important;
 }

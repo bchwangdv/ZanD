@@ -224,7 +224,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 accordionDiv.append(matchDetailContent);
                 resultContainer.append(accordionDiv);
                 
-            	// 날짜 및 시간 처리
+            	//날짜 및 시간 처리
                 const KSTmatchDate = new Date(data.matchDate);
                 KSTmatchDate.setHours(KSTmatchDate.getHours()+9);
                 
@@ -236,12 +236,12 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				const matchTime = matchHours + ':' + matchMinutes;
                 const matchDate = matchYear + '년 ' + matchMonth + '월 ' + matchDay + '일 ' + matchTime
                 
-            	// 날짜 및 시간 출력
+            	//날짜 및 시간 출력
 				dateDiv.innerHTML = matchDate;
                 dateDiv.className = "date";
 				matchContainerSub1.appendChild(dateDiv);
 
-                // 매치 타입 출력
+                //매치 타입 출력
                 if(data.matchType == 50) {
                 	matchTypeDiv.innerHTML = '<button type="button" class="btn btn-primary" disabled>공식경기</button>';
                 } else if (data.matchType == 40) {
@@ -263,7 +263,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     				opResultDiv.innerHTML = 'vs. ' + opInfo.nickname;
     				opResultDiv.className = "opResult";
     				
-    				// 몰수승, 몰수패 Check
+    				//몰수승, 몰수패 Check
     				
     				if(myInfo.shoot.goalTotal == null) {
     					myInfo.shoot.goalTotal = 0;
@@ -300,6 +300,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    myPlayersDiv.id = 'myPlayersDiv-' + numbering;
 				    myPlayersDiv.classList.add('playersDiv');
 				    myPlayersDiv.classList.add('col-6');
+				    
 				    //몰수패 체크
 				    if(myInfo.matchDetail.matchResult == "몰수패") {
 				    	myPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
@@ -315,6 +316,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    
 				    const opPlayersDiv = document.createElement("div");
 				    opPlayersDiv.id = 'opPlayersDiv-' + numbering;
+				    
 				    //몰수승 체크
 				    if(myInfo.matchDetail.matchResult == "몰수승") {
 				    	opPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
@@ -337,8 +339,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    
 				    matchDetailContent.append(allPlayersDiv);
 				
-					// 승,패에 색 추가
-					
+					//승,패에 색 추가
 					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
 						accordionBtn.style.background = "#0077FF26"; //승
 						WDL.style.color = "#0d6efd";
@@ -359,16 +360,16 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 	matchContainerSub2.appendChild(opResultDiv);
                 	matchContainerSub2.appendChild(matchResultDiv);
                 }
-				// 매치 디테일 조회
+				//매치 디테일 조회
                 accordionBtn.addEventListener('click', ()=>{
                 	loadMatchDetail(numbering, matchDetailContent, myInfo, opInfo)
                 });
                 
                 
-                // 로딩 완료
+                //로딩 완료
                 $(".loading").css("display","none");
             });
-            // 더보기 구현
+            //더보기 구현
             const moreResult = document.createElement("button");
             moreResult.classList.add('moreResult');
             moreResult.classList.add('btn');
@@ -473,25 +474,24 @@ function loadPlayersInfo(numbering, playerInfo, category) {
     if (isSubPlayer) {
         targetDiv.innerHTML += "<div class='subPlayer'>[후보] " + playerName + "</div>";
     } else {
-    	// playerCard를 동적으로 생성
+    	//playerCard를 동적으로 생성
         const playerCard = document.createElement('div');
         playerCard.classList.add('player', 'player-' + playerInfo.spId);
         playerCard.setAttribute('data-position', playerPosition);
         
-        // showPlayerDetail 함수 호출을 위한 이벤트 리스너 추가
+        //showPlayerDetail 함수 호출을 위한 이벤트 리스너 추가
         playerCard.addEventListener('click', function() {
             showPlayerDetail(playerInfo);
-            console.log("클릭 테스트");
         });
         
-        // goal div 생성
+        //goal div 생성
         const goalDiv = document.createElement('div');
         goalDiv.classList.add('goal');
         goalDiv.setAttribute('data-goal', playerInfo.status.goal);
         goalDiv.textContent = playerGoal;
         playerCard.appendChild(goalDiv);
 
-        // 카드 뒷면 이미지 div 생성
+        //카드 뒷면 이미지 div 생성
         const cardBackDiv = document.createElement('div');
         cardBackDiv.classList.add('cardBackDiv');
         const cardBackImg = document.createElement('img');
@@ -500,14 +500,14 @@ function loadPlayersInfo(numbering, playerInfo, category) {
         cardBackDiv.appendChild(cardBackImg);
         playerCard.appendChild(cardBackDiv);
 
-        // 플레이어 이미지
+        //선수 이미지
         const playerImg = document.createElement('img');
         playerImg.classList.add('playerImg');
         playerImg.setAttribute('src', playerImgSrc);
         playerImg.setAttribute('onerror', onErrorImgSrc);
         playerCard.appendChild(playerImg);
 
-        // 플레이어 정보 div 생성
+        //선수 정보 div 생성
         const playerInfoDiv = document.createElement('div');
         playerInfoDiv.classList.add('playerInfo');
         const seasonImg = document.createElement('img');
@@ -525,14 +525,14 @@ function loadPlayersInfo(numbering, playerInfo, category) {
         playerInfoDiv.appendChild(positionDiv);
         playerCard.appendChild(playerInfoDiv);
 
-        // 플레이어 이름 div 생성
+        //선수 이름 div 생성
         const playerNameDiv = document.createElement('div');
         playerNameDiv.classList.add('playerName');
         playerNameDiv.setAttribute('data-seasonId', seasonId);
         playerNameDiv.textContent = playerName;
         playerCard.appendChild(playerNameDiv);
 
-        // targetDiv에 playerCard 추가
+        //targetDiv에 playerCard 추가
         targetDiv.appendChild(playerCard);
 	}
 }    
@@ -625,7 +625,7 @@ function showPlayerDetail(playerInfo) {
 
     playerDetailDiv.appendChild(rightColumn);
 
-    playerMatchDetail.innerHTML = ''; // 이전 내용 초기화
+    playerMatchDetail.innerHTML = ''; //이전 내용 초기화
     playerMatchDetail.appendChild(playerDetailDiv);
 
     playerModal.style.display = 'block';
@@ -637,7 +637,7 @@ document.getElementById('closeButton').addEventListener('click', function() {
     playerModal.style.display = 'none';
 });
 
-// 모달 외부 클릭 시 닫기
+//모달 외부 클릭 시 닫기
 window.onclick = function(event) {
     const modal = document.getElementById("playerModal");
     if (event.target == modal) {

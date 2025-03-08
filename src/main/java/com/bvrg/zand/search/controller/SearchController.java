@@ -1,4 +1,4 @@
-package com.bvrg.theZD.search.controller;
+package com.bvrg.zand.search.controller;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bvrg.theZD.search.model.vo.Player;
-import com.bvrg.theZD.search.repository.PlayerRepository;
+import com.bvrg.zand.search.model.vo.Player;
+import com.bvrg.zand.search.repository.PlayerRepository;
 
 @Controller
 public class SearchController {

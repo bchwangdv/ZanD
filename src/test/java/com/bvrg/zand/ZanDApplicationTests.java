@@ -1,10 +1,10 @@
-package com.bvrg.theZD;
+package com.bvrg.zand;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TheZDApplicationTests {
+class ZanDApplicationTests {
 
 	@Test
 	void contextLoads() {

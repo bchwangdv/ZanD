@@ -1,4 +1,4 @@
-package com.bvrg.theZD.search.model.vo;
+package com.bvrg.zand.search.model.vo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

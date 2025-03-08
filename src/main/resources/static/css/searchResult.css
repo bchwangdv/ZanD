@@ -242,10 +242,14 @@ body {
 	pointer-events: none;
 }
 
+/* 카드 배경 별 가독성 */
 .playerName[data-seasonid="820"],
 .playerName[data-seasonid="825"],
 .playerName[data-seasonid="826"],
-.playerName[data-seasonid="827"]
+.playerName[data-seasonid="827"],
+.playerName[data-seasonid="829"],
+.playerName[data-seasonid="832"],
+.playerName[data-seasonid="834"]
 {
 	color: white;
 }
