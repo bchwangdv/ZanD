@@ -100,6 +100,7 @@ fetch(ouidReq, {
 			this.classList.add('active');
 			resultContainer.empty();
 			$(".loading").css("display","block");
+			$(".nav-item").css("pointer-events","none");
 			loadStatus = {};
 			loadMatchData(ouid, this.value);
 		});
@@ -168,6 +169,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
             matchContainer.innerText = '최근 경기 결과가 없습니다.';
             resultContainer.append(matchContainer);
             $(".loading").css("display","none");
+            $(".nav-item").css("pointer-events","auto");
         	return;
         }
     	
@@ -250,7 +252,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 	matchTypeDiv.innerHTML = '<button type="button" class="btn btn-secondary" disabled>감독모드</button>';
                 }
                 matchContainerSub1.appendChild(matchTypeDiv);
-
+				
                 if(data.matchInfo[1] != undefined) {
                 	if (data.matchInfo[0].ouid == usersOuid) {
     					var myInfo = data.matchInfo[0]
@@ -264,25 +266,25 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     				opResultDiv.className = "opResult";
     				
     				//몰수승, 몰수패 Check
-    				
-    				if(myInfo.shoot.goalTotal == null) {
-    					myInfo.shoot.goalTotal = 0;
-    					myInfo.shoot.shootOutScore = 0;
-    					myInfo.matchDetail.matchResult = "몰수패"
-    				}
-    				if(opInfo.shoot.goalTotal == null) {
-    					opInfo.shoot.goalTotal = 0;
-    					opInfo.shoot.shootOutScore = 0;
+    				if(myInfo.matchDetail.matchEndType == 1) {
     					myInfo.matchDetail.matchResult = "몰수승"
+    					opInfo.matchDetail.matchResult = "몰수패"
+    				}
+    				if(myInfo.matchDetail.matchEndType == 2) {
+    					myInfo.matchDetail.matchResult = "몰수패"
+    					opInfo.matchDetail.matchResult = "몰수승"
     				}
     				
-    				matchResultDiv.innerHTML = myInfo.shoot.goalTotal + ' : ' + opInfo.shoot.goalTotal + ' '
+    				matchResultDiv.innerHTML = myInfo.shoot.goalTotalDisplay + ' : ' + opInfo.shoot.goalTotalDisplay + ' '
     				const WDL = document.createElement("div");
     				WDL.className = "WDL";
     				WDL.innerHTML = myInfo.matchDetail.matchResult;
     				
-    				if(!(myInfo.shoot.shootOutScore == 0 && opInfo.shoot.shootOutScore == 0)){
-    					matchResultDiv.innerHTML += "<div class='shootOut'>(" + myInfo.shoot.shootOutScore + "-" + opInfo.shoot.shootOutScore + ")</div>";
+    				//승부차기 Check
+    				if(myInfo.shoot.shootOutScore != null && opInfo.shoot.shootOutScore != null) {
+    					if(!(myInfo.shoot.shootOutScore == 0 && opInfo.shoot.shootOutScore == 0)){
+        					matchResultDiv.innerHTML += "<div class='shootOut'>(" + myInfo.shoot.shootOutScore + "-" + opInfo.shoot.shootOutScore + ")</div>";
+        				}
     				}
     				matchResultDiv.className = "matchResult"
 					matchContainerSub2.appendChild(matchResultDiv);
@@ -368,6 +370,7 @@ function loadMatchData(ouid, conditionNo, page = 1) {
                 
                 //로딩 완료
                 $(".loading").css("display","none");
+                $(".nav-item").css("pointer-events","auto");
             });
             //더보기 구현
             const moreResult = document.createElement("button");
@@ -458,9 +461,11 @@ function loadPlayersInfo(numbering, playerInfo, category) {
     const opSubPlayersDiv = document.getElementById('opSubPlayersDiv-' + numbering);
 	
     if (!spDataMap[playerInfo.spId]) return;
-	
+    
     const playerImgSrc = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playerInfo.spId + ".png";
-    const onErrorImgSrc = "this.src='https://ssl.nexon.com/s2/game/fc/mobile/squadMaker/default/d_player.png'";
+    const pId = Number(playerInfo.spId.toString().substring(3, 9));
+    console.log(pId);
+    const onErrorImgSrc = "this.src='https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + pId + ".png'"
     const seasonId = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonId;
     const seasonImgSrc = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonImg;
     const cardBackImgSrc = seasonImgSrc.replace('/season/', '/card/');
