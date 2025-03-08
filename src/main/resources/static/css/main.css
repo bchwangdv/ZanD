@@ -14,6 +14,7 @@ body {
 
 .logoContainer {
 	text-align: center;
+	margin: auto;
 	padding: 20px;
 }
 
@@ -28,6 +29,7 @@ body {
 }
 
 .logoPhrase {
+	white-space: nowrap;
 	font-size: 35px;
 	color: #EEEEEE;
 	letter-spacing: 1px;
