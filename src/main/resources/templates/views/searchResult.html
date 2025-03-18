@@ -291,38 +291,36 @@ function loadMatchData(ouid, conditionNo, page = 1) {
     				matchContainerSub2.appendChild(opResultDiv);
     				matchContainerSub3.appendChild(WDL);
     				
-					const myFieldDiv = document.createElement("div");
-					myFieldDiv.id = "myFieldDiv";
+				    
 					
 					const allPlayersDiv = document.createElement("div");
 				    allPlayersDiv.id = "allPlayersDiv";
 				    allPlayersDiv.classList.add('row');
+				    
+				    const myPlayersSal = document.createElement("div");
+				    myPlayersSal.id = 'myPlayersSal-' + numbering;
+				    myPlayersSal.classList.add('playersSal');
+				    myPlayersSal.classList.add('col-6');
+// 				    myPlayersSal.innerHTML = "총 급여 0/275"
 				    		
 				    const myPlayersDiv = document.createElement("div");
 				    myPlayersDiv.id = 'myPlayersDiv-' + numbering;
 				    myPlayersDiv.classList.add('playersDiv');
 				    myPlayersDiv.classList.add('col-6');
 				    
-				    //몰수패 체크
-				    if(myInfo.matchDetail.matchResult == "몰수패") {
-				    	myPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
-    				}
-				    
 				    const mySubPlayersDiv = document.createElement("div");
 				    mySubPlayersDiv.id = 'mySubPlayersDiv-' + numbering;
 				    mySubPlayersDiv.classList.add('subPlayersDiv');
 				    mySubPlayersDiv.classList.add('col-6');
 				    
-				    const opFieldDiv = document.createElement("div");
-					opFieldDiv.id = "opFieldDiv";
+				    const opPlayersSal = document.createElement("div");
+				    opPlayersSal.id = 'opPlayersSal-' + numbering;
+				    opPlayersSal.classList.add('playersSal');
+				    opPlayersSal.classList.add('col-6');
+// 				    opPlayersSal.innerHTML = "총 급여 0/275"
 				    
 				    const opPlayersDiv = document.createElement("div");
 				    opPlayersDiv.id = 'opPlayersDiv-' + numbering;
-				    
-				    //몰수승 체크
-				    if(myInfo.matchDetail.matchResult == "몰수승") {
-				    	opPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
-    				}
 				    
 				    opPlayersDiv.classList.add('playersDiv');
 				    opPlayersDiv.classList.add('col-6');
@@ -332,14 +330,23 @@ function loadMatchData(ouid, conditionNo, page = 1) {
 				    opSubPlayersDiv.classList.add('subPlayersDiv');
 				    opSubPlayersDiv.classList.add('col-6');
 				    
-				    allPlayersDiv.append(myFieldDiv);
-				    allPlayersDiv.append(opFieldDiv);
+				    allPlayersDiv.append(myPlayersSal);
+				    allPlayersDiv.append(opPlayersSal);
 				    allPlayersDiv.append(myPlayersDiv);
 				    allPlayersDiv.append(opPlayersDiv);
 				    allPlayersDiv.append(mySubPlayersDiv);
 				    allPlayersDiv.append(opSubPlayersDiv);
 				    
 				    matchDetailContent.append(allPlayersDiv);
+				    
+				  	//몰수승 체크
+				    if(myInfo.matchDetail.matchResult == "몰수승") {
+				    	opPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
+    				}
+				    //몰수패 체크
+				    if(myInfo.matchDetail.matchResult == "몰수패") {
+				    	myPlayersDiv.innerHTML = '<div class="forfeiture">몰수 경기는 경기 정보가 표시되지 않습니다.</div>';
+    				}
 				
 					//승,패에 색 추가
 					if (myInfo.matchDetail.matchResult == '승' || myInfo.matchDetail.matchResult == '몰수승') {
@@ -464,7 +471,6 @@ function loadPlayersInfo(numbering, playerInfo, category) {
     
     const playerImgSrc = "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p" + playerInfo.spId + ".png";
     const pId = Number(playerInfo.spId.toString().substring(3, 9));
-    console.log(pId);
     const onErrorImgSrc = "this.src='https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/players/p" + pId + ".png'"
     const seasonId = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonId;
     const seasonImgSrc = seasonDataMap[playerInfo.spId.toString().substring(0, 3)].seasonImg;
