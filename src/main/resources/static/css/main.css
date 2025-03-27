@@ -7,9 +7,9 @@
 body {
 	width: 100%;
 	height: 100%;
-	background: rgba(58,125,51,1);
+	background: #222222;
 	background-attachment: fixed;
-	font-family: 'Paperlogy-8ExtraBold';
+	font-family: 'NEXONFootballGothicBA1';
 }
 
 .logoContainer {
@@ -19,22 +19,22 @@ body {
 }
 
 .logoMain {
-    font-family: 'HakgyoansimPuzzleTTF-Black';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
-	font-size: 130px;
-	color: white;
+	font-family: 'NEXONFootballGothicBA1';
+	font-size: 180px;
+	color: #07F468;
 	letter-spacing: 2px;
 	margin: 40px 0 0 0;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .logoPhrase {
+	position: relative;
 	white-space: nowrap;
 	font-size: 35px;
 	color: #EEEEEE;
 	letter-spacing: 1px;
 	margin: 5px 0 0;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .searchbarContainer {
@@ -62,7 +62,7 @@ body {
 .search-container {
 	display: flex;
 	align-items: center;
-	border: 2px solid #222222;
+	border: 5px solid #07F468;
 	border-radius: 50px;
 	padding: 10px;
 	width: 800px;
@@ -71,7 +71,7 @@ body {
 
 .patchNote {
 	background: white;
-	border: 2px solid #222222;
+	border: 5px solid #07F468;
 	border-radius: 20px;
 	padding: 20px;
 	width: 1000px;

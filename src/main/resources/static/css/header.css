@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 @font-face {
-    font-family: 'HakgyoansimPuzzleTTF-Black';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
+    font-family: 'NEXONFootballGothicBA1';
+    src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXONFootballGothicBA1.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -10,7 +10,6 @@
 .container-fluid {
 	background: white;
 	padding: 1rem;
-	color: #EEEEE;
 }
 
 .logoContainer {
@@ -23,8 +22,7 @@
 }
 
 .logoText {
-	font-family: 'HakgyoansimPuzzleTTF-Black';
+	font-family: 'NEXONFootballGothicBA1';
 	font-size: 50px;
-	color: white;
 }
 

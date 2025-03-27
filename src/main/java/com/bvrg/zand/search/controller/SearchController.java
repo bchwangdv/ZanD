@@ -38,22 +38,4 @@ public class SearchController {
 		model.addAttribute("player", player);
 		return "playerSearch";
     }
-    
-    @GetMapping("playersDBSave")
-    @ResponseBody
-    public void playersDBSave() {
-    		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-    		
-    		ChromeOptions options = new ChromeOptions();
-    		options.addArguments("--headless");
-    		
-    		WebDriver driver = new ChromeDriver(options);
-    		String baseUrl = "https://fifaonline4.inven.co.kr/dataninfo/player/";
-    		driver.get(baseUrl);
-    		
-    		List<WebElement> playerElements = driver.findElements(By.cssSelector(".fifa4.name > b"));
-            for (WebElement player : playerElements) {
-            }
-    		driver.quit();
-    }
 }

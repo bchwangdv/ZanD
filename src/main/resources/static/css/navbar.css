@@ -1,16 +1,9 @@
 @charset "UTF-8";
 
 @font-face {
-    font-family: 'HakgyoansimPuzzleTTF-Black';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimPuzzleTTF-Black.woff2') format('woff2');
+    font-family: 'NEXONFootballGothicBA1';
+    src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXONFootballGothicBA1.woff') format('woff');
     font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Paperlogy-8ExtraBold';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
-    font-weight: 800;
     font-style: normal;
 }
 
@@ -28,11 +21,11 @@
 }
 
 .logo a{
-	font-family: 'HakgyoansimPuzzleTTF-Black';
-	font-size: 1rem;
+	font-family: 'NEXONFootballGothicBA1';
+	font-size: 2rem;
 	text-decoration: none;
-	color: white;
-	text-shadow: 0.1rem 0.1rem 10px black;
+	color: #07F468;
+	text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 	flex-wrap: nowrap;
 }
 
@@ -44,9 +37,9 @@
 .navbar {
 	display: flex;
 	width: 1080px;
-    color: white;
+    color: #EEEEEE;
     padding: 10px;
-    text-shadow: 0.1rem 0.1rem 10px black;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
     white-space: nowrap;
 }
 
@@ -55,8 +48,8 @@
 	width: 100%;
 	text-align: center;
 	cursor: pointer;
-    color: white;
-    font-family: 'Paperlogy-8ExtraBold';
+    color: #EEEEEE;
+    font-family: 'NEXONFootballGothicBA1';
     font-weight: bold;
     text-decoration: none;
     margin: 0rem 4rem;
@@ -66,5 +59,5 @@
 
 .halfline {
 	height: 30px;
-	background: #EEEEEE;
+	background: #07F468;
 }
